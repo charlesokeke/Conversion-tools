@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Collection Form</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+    <style>
+        
+                /* Form styling */
+       
+        /* Input styling */
+        input {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+		
+		h5 {
+           font-size: 1rem;
+		   margin-bottom:0px;
+		   padding-bottom:0px;
+		   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+           line-height: 1.28571429e
+        }
+        
+        /* Input label styling */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+			font-family: roboto slab,sans-serif;
+        }
+        
+        /* Button styling */
+        button {
+            cursor: pointer;
+			display:block;
+			background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 11px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+			font-weight:bold;
+			border-radius:1px;
+			background-color: #008CBA;
+        }
+        
+		.row {
+           display: flex;
+           flex-direction: row;
+           flex-wrap: wrap;
+           max-width: 100%;
+         }
+
+      .column {
+          display: flex;
+           flex-direction: column;
+           flex-basis: 100%;
+           flex: 1;
+   }
+   
+     .some-page-wrapper {
+             margin: 15px;
+			 
+            
+}
+
+
+.blue-column {
+  background-color: blue;
+  padding:10px;
+  height:100px;
+ 
+}
+
+.green-column {
+  
+  padding:10px;
+ 
+}
+
+h1 {
+    border-bottom: 1px solid #dedede;
+    font-size: 2.1em;
+    color: #822;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+h1, h2 {
+    font-family: roboto slab,sans-serif;
+    font-weight: 400;
+    line-height: 1.2em;
+	border-bottom: 1px solid #dedede;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  text-align: left;
+}
+
+.unix-time-font-size{
+	font-size:15px;
+	
+
+}
+
+.green-column > p{
+	font-family: roboto slab,sans-serif;
+
+}
+
+.roboto-font {
+   font-family: roboto slab,sans-serif;
+
+}
+
+form {
+		border-bottom: 1px solid #dedede
+
+}
+
+    </style>
+</head>
+<body>
+       <div>
+		  <h1> Epoch & Unix Timestamp Conversion Tools</h1>
+      </div>
+	  
+	  
+  
+   <div class='some-page-wrapper'>
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
+        <form action="test" method="post">
+        <h5 for="unix_time">Enter a Timestap:</h5>
+        <input type="number" name="unix_time" id="unix_time" required>
+         <button type="submit" value="Submit"> Convert</button>
+		
+     </form>
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if date_covert %}
+		<h2 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time</h2>
+			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;">{{ date_covert }}</span></p>
+		{% endif %}
+		</div>
+		<div>
+		  <p  style="padding:0px; margin:0px;font-size:20px"> Current unix time in second: <span id="unix-time" class="unix-time-font-size"></span> </p>
+		  <p style="padding:0px; margin:0px;font-size:20px;"> Current unix time with date: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
+		</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
+	  
+        <form action="test2" method="post">
+			<label for="base64_data">Base64 Encoded Data:</label>
+			<input name="base64_data" id="base64_data" required></input>
+			<button type="submit" value="Submit">Convert</button>
+	    </form>
+	
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if base64_convert %}
+		<h2 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded</h2>
+			 <p  style="padding:0px; margin:0px"> Decoded data: <span class="unix-time-font-size" style="color:red;">{{ base64_convert }}</span></p>
+		{% endif %}
+		</div>
+		<div>
+		  <p>Column 2</p>
+		  
+		</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
+	  
+        <form action="test3" method="post">
+	
+	        <label for="base64_data">IPV4/IPV6:</label>
+            <input name="ip_convert" id="ip_convert" required></input>    
+            <button type="submit" value="Submit"> Submit</button>
+		       {% if binary_ip %}
+			       <code> {{ip_version}} Binary: {{ binary_ip }}</code>
+		       {% elif error %}
+			        <p> {{ error }}</p>
+		     {% endif %}	
+	    </form>
+	
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if base64_convert %}
+		<h2 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded</h2>
+			 <p  style="padding:0px; margin:0px"> Decoded data: <span class="unix-time-font-size" style="color:red;">{{ base64_convert }}</span></p>
+		{% endif %}
+		</div>
+		<div>
+		  <p>Column 2</p>
+		  
+		</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+   <div class='row'>
+    <div class='column'>
+      <div class='blue-column' style="height:200px;">
+	  
+        <form action="test4" method="post">
+	       <label for="ip_subnet">Subnet Mask:</label>
+            <input name="subnet_mask" id="ip_subnet" required></input>
+	       <label for="ip_subnet">IP Adress:</label>
+		   <input  name="ip" id="ip_subnet" required></input>
+           <button type="submit" value="Submit">Submit</button>
+
+	   </form>
+	
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if ip_subnet %}
+		<h2 style="margin-bottom:0px;margin-top:0px;"> Subnet address</h2>
+			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:red;">{{ ip_subnet }}</span></p>
+		{% endif %}
+		</div>
+		<div>
+		  <p>Column 2</p>
+		  
+		</div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+</div>
+     
+	
+	
+	
+	
+	
+	
+	 <script>
+        // Get the element where the Unix time will be displayed
+        var unixTime = document.getElementById("unix-time");
+		var unixTimeDate = document.getElementById("unix-time-date");
+
+        // Update the Unix time every second
+        setInterval(function() {
+            var currentTime = Math.floor(Date.now() / 1000);
+			var currentTimeDate = new Date(currentTime*1000)
+			console.log(currentTimeDate)
+            unixTime.innerHTML = currentTime;
+			unixTimeDate.innerHTML = currentTimeDate;
+        }, 1000);
+    </script>
+</body>
+</html>
+</body>
+</html>
