@@ -224,7 +224,9 @@ form {
 		<h3 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded data:</h3>
 			 <div>
 			    <p  style="padding:5px; margin:2px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
-			       <code style="font-size:15px;">{{ base64_convert }}</code>
+			       <code style="font-size:15px;" id="copy-text">{{ base64_convert }}</code>
+				   <button onclick="copyText('copy-text');return false">Copy text</button>
+				   
 			    </p>
 			 </div>
 			 <p  style="padding:0px; margin:0px"> Encoded rounds: <span class="unix-time-font-size" style="color:red;">{{ encoded_rounds }}</span></p>
@@ -262,7 +264,11 @@ form {
         <div>{% if binary_ip %}
 		<h3 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h3>
 			 <div>
-			    <p  style="padding:0px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  {{ binary_ip }}</p>
+			    <p  style="padding:3px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  {{ binary_ip }}
+				   
+				</p>
+				    <button onclick="copyText()">Copy text</button>
+				
 			 </div>
 			  {% elif error %}
 			        <p> {{ error }}</p>
@@ -324,6 +330,17 @@ form {
         // Get the element where the Unix time will be displayed
         var unixTime = document.getElementById("unix-time");
 		var unixTimeDate = document.getElementById("unix-time-date");
+		function copyText() {
+              
+					var r = document.createRange();
+					r.selectNode(document.getElementById(id));
+					window.getSelection().removeAllRanges();
+					window.getSelection().addRange(r);
+					document.execCommand('copy');
+					window.getSelection().removeAllRanges();
+					alert("copied text to clipboard")
+		
+			}
 
         // Update the Unix time every second
         setInterval(function() {
