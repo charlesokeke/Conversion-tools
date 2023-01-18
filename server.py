@@ -3,6 +3,7 @@ from datetime import datetime
 import base64
 import ipaddress
 import re
+import urllib
 
 app = Flask(__name__)
 
@@ -82,7 +83,27 @@ def get_ip_subnet():
     ip_address= request.form['ip']
     ip = ipaddress.ip_address(ip_address)
     ip_subnet = str(ipaddress.ip_network(ip_address + '/' + subnet_mask, strict=False))
-    return render_template('test.html',ip_subnet=ip_subnet)    
+    return render_template('test.html',ip_subnet=ip_subnet) 
+
+
+@app.route('/test5', methods=['POST'])
+def get_url():
+    
+    try:
+        url = request.form['url_decode']
+        url_check = urllib.parse.urlparse(url)
+        if url:
+            url = urllib.parse.unquote(url)
+            url = urllib.parse.unquote_plus(url)
+        elif isinstance(url, unicode):
+            url = urllib.parse.quote(url.encode('utf8'))
+            url = urllib.parse.unquote(url)
+            url = urllib.parse.unquote_plus(url)
+        else:
+            return render_template('test.html',url_error="invalid url") 
+        return render_template('test.html',url_decoded=url)
+    except:
+         return render_template('test.html',url_error="invalid url")    
 
 if __name__ == '__main__':
     app.run(debug=True)

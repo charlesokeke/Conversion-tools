@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data Collection Form</title>
+    <title>Conversion tools</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
@@ -75,7 +75,7 @@
    
      .some-page-wrapper {
              margin: 15px;
-			 padding:50px
+			 padding:30px
 			 
 			 
             
@@ -97,8 +97,9 @@ h1 {
     border-bottom: 1px solid #dedede;
     font-size: 2.1em;
     color: #822;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     margin-bottom: 14px;
+	padding-left:20px;
 }
 
 h1, h2, h3 {
@@ -170,7 +171,7 @@ form {
 </head>
 <body>
        <div>
-		  <h1> Epoch & Unix Timestamp Conversion Tools</h1>
+		  <h1> Decoding & Conversion Tools</h1>
       </div>
 	  
 	  
@@ -291,7 +292,7 @@ form {
       <div class='blue-column'>
 	   <section>
         <form action="test4" method="post">
-	       <h2 class="h2-input-labels"> Enter IPv4 and subnet mask in slash notation:</h2>
+	       <h2 class="h2-input-labels"> Enter IPv4 and subnet mask in slash notation: <br/> <code>Note: Ouputs the subnet address for the Ipv4 and subnet mask</code></h2>
             <input name="ip" id="ip" required></input>
 	       <label class="h2-input-labels">Subnetmask: /</label>
 		   <input style="width:3%;"  name="subnet_mask" id="ip_subnet" required></input>
@@ -318,6 +319,46 @@ form {
   </section>
   
   
+  <section>
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
+	  
+        <form action="test5" method="post">
+	
+	        <h2  class="h2-input-labels">Enter URL for decoding:</h2>
+            <input name="url_decode" id="url_decode" required></input>    
+            <button type="submit" value="Submit"> Convert</button>
+	    </form>
+	
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if url_decoded %}
+		<h3 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h3>
+			 <div>
+			    <p  style="padding:3px; margin:0px; width:400px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  {{ url_decoded }}
+				   
+				</p>
+				    <button onclick="copyText()">Copy text</button>
+				
+			 </div>
+			  {% elif url_error %}
+			        <p> {{ url_error }}</p>
+		     {% endif %}
+		 
+		</div>
+		<div>
+		
+		  
+		</div>
+      </div>
+    </div>
+  </div>
+  </section>
+  
+  
 </div>
      
 	
@@ -330,7 +371,7 @@ form {
         // Get the element where the Unix time will be displayed
         var unixTime = document.getElementById("unix-time");
 		var unixTimeDate = document.getElementById("unix-time-date");
-		function copyText() {
+		function copyText(id) {
               
 					var r = document.createRange();
 					r.selectNode(document.getElementById(id));
