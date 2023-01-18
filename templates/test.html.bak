@@ -6,13 +6,16 @@
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
     <style>
+	* {
+          box-sizing: border-box;
+   }
         
                 /* Form styling */
        
         /* Input styling */
         input {
             width: 50%;
-            padding: 12px 20px;
+            padding: 8px 15px;
             margin: 8px 0;
             box-sizing: border-box;
             border: 1px solid #ccc;
@@ -29,7 +32,7 @@
         
         /* Input label styling */
         label {
-            display: block;
+
             margin-bottom: 10px;
             font-weight: bold;
 			font-family: roboto slab,sans-serif;
@@ -39,17 +42,18 @@
         button {
             cursor: pointer;
 			display:block;
-			background-color: #4CAF50; /* Green */
             border: none;
-            color: white;
-            padding: 11px;
+            padding: 6px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
 			font-weight:bold;
 			border-radius:1px;
-			background-color: #008CBA;
+			background-color: #2185d0;
+            color: #fff;
+            text-shadow: none;
+            font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif
         }
         
 		.row {
@@ -63,20 +67,20 @@
           display: flex;
            flex-direction: column;
            flex-basis: 100%;
-           flex: 1;
+           
    }
    
      .some-page-wrapper {
              margin: 15px;
+			 padding:50px
+			 
 			 
             
 }
 
 
 .blue-column {
-  background-color: blue;
-  padding:10px;
-  height:100px;
+  max-height:100%;
  
 }
 
@@ -94,11 +98,11 @@ h1 {
     margin-bottom: 14px;
 }
 
-h1, h2 {
+h1, h2, h3 {
     font-family: roboto slab,sans-serif;
     font-weight: 400;
     line-height: 1.2em;
-	border-bottom: 1px solid #dedede;
+	
 }
 
 h1 {
@@ -120,6 +124,7 @@ h1 {
 
 .unix-time-font-size{
 	font-size:15px;
+	color: #822;
 	
 
 }
@@ -135,10 +140,28 @@ h1 {
 }
 
 form {
-		border-bottom: 1px solid #dedede
+		
 
 }
 
+.h2-input-labels {
+    font-size: 1em;
+    color: #143470;
+    margin-bottom: 14px;
+    padding: 0;
+	font-weight: bold;
+
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.output-box {
+  word-break: break-all;
+  width:200px;
+}
     </style>
 </head>
 <body>
@@ -149,11 +172,12 @@ form {
 	  
   
    <div class='some-page-wrapper'>
+  <section> 
   <div class='row'>
     <div class='column'>
       <div class='blue-column'>
         <form action="test" method="post">
-        <h5 for="unix_time">Enter a Timestap:</h5>
+        <h2 for="unix_time" class="h2-input-labels">Enter a Timestap:</h5>
         <input type="number" name="unix_time" id="unix_time" required>
          <button type="submit" value="Submit"> Convert</button>
 		
@@ -163,27 +187,29 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
-		<h2 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time</h2>
+		<h3 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time</h3>
 			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;">{{ date_covert }}</span></p>
 		{% endif %}
 		</div>
 		<div>
-		  <p  style="padding:0px; margin:0px;font-size:20px"> Current unix time in second: <span id="unix-time" class="unix-time-font-size"></span> </p>
-		  <p style="padding:0px; margin:0px;font-size:20px;"> Current unix time with date: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
+		  <p  style="padding:0px; margin:0px;font-size:18px"> Unix time in second: <span id="unix-time" class="unix-time-font-size"></span> </p>
+		  <p style="padding:0px; margin:0px;font-size:18px;"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
 		</div>
       </div>
     </div>
   </div>
+  </section>
   
-  
+  <section>
   <div class='row'>
     <div class='column'>
       <div class='blue-column'>
 	  
-        <form action="test2" method="post">
-			<label for="base64_data">Base64 Encoded Data:</label>
+        <form action="test2" method="post"> 
+			<h2 class="h2-input-labels"> Enter base64 encoded data for decoding: <br/> <code>Note: Decodes multiple rounds of base64 encoded object</code></h2>
+			
 			<input name="base64_data" id="base64_data" required></input>
-			<button type="submit" value="Submit">Convert</button>
+			<button type="submit" value="Submit">Decode</button>
 	    </form>
 	
       </div>
@@ -191,87 +217,89 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if base64_convert %}
-		<h2 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded</h2>
+		<h3 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded data:</h3>
 			 <p  style="padding:0px; margin:0px"> Decoded data: <span class="unix-time-font-size" style="color:red;">{{ base64_convert }}</span></p>
-		{% endif %}
+			 <p  style="padding:0px; margin:0px"> Encoded rounds: <span class="unix-time-font-size" style="color:red;">{{ encoded_rounds }}</span></p>
+			 {% elif base64error %}
+			        <code style="clolor:red;"> {{ base64error }}</code>
+		     {% endif %}
+
 		</div>
 		<div>
-		  <p>Column 2</p>
+		 
 		  
 		</div>
       </div>
     </div>
   </div>
+  </section>
   
   
-  
-  
+  <section>
   <div class='row'>
     <div class='column'>
       <div class='blue-column'>
 	  
         <form action="test3" method="post">
 	
-	        <label for="base64_data">IPV4/IPV6:</label>
+	        <h2  class="h2-input-labels">Enter IPv4/IPv6 for binary notation conversion:</h2>
             <input name="ip_convert" id="ip_convert" required></input>    
-            <button type="submit" value="Submit"> Submit</button>
-		       {% if binary_ip %}
-			       <code> {{ip_version}} Binary: {{ binary_ip }}</code>
-		       {% elif error %}
-			        <p> {{ error }}</p>
-		     {% endif %}	
+            <button type="submit" value="Submit"> Convert</button>
 	    </form>
 	
       </div>
     </div>
     <div class='column'>
       <div class='green-column flex-container'>
-        <div>{% if base64_convert %}
-		<h2 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded</h2>
-			 <p  style="padding:0px; margin:0px"> Decoded data: <span class="unix-time-font-size" style="color:red;">{{ base64_convert }}</span></p>
-		{% endif %}
+        <div>{% if binary_ip %}
+		<h3 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h3>
+			 <p  style="padding:0px; margin:0px;">  <span class="unix-time-font-size" style="color:red;">{{ binary_ip }}</span></p>
+			  {% elif error %}
+			        <p> {{ error }}</p>
+		     {% endif %}
+		 
 		</div>
 		<div>
-		  <p>Column 2</p>
+		
 		  
 		</div>
       </div>
     </div>
   </div>
+  </section>
   
   
-  
-  
+  <section>
    <div class='row'>
     <div class='column'>
-      <div class='blue-column' style="height:200px;">
-	  
+      <div class='blue-column'>
+	   <section>
         <form action="test4" method="post">
-	       <label for="ip_subnet">Subnet Mask:</label>
-            <input name="subnet_mask" id="ip_subnet" required></input>
-	       <label for="ip_subnet">IP Adress:</label>
-		   <input  name="ip" id="ip_subnet" required></input>
-           <button type="submit" value="Submit">Submit</button>
+	       <h2 class="h2-input-labels"> Enter IPv4 and subnet mask in slash notation:</h2>
+            <input name="ip" id="ip" required></input>
+	       <label class="h2-input-labels">Subnetmask: /</label>
+		   <input style="width:3%;"  name="subnet_mask" id="ip_subnet" required></input>
+           <button type="submit" value="Submit">Convert</button>
 
 	   </form>
-	
+	  </section>
       </div>
     </div>
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if ip_subnet %}
-		<h2 style="margin-bottom:0px;margin-top:0px;"> Subnet address</h2>
+		<h3 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h3>
 			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:red;">{{ ip_subnet }}</span></p>
 		{% endif %}
 		</div>
 		<div>
-		  <p>Column 2</p>
+		
 		  
 		</div>
       </div>
     </div>
   </div>
-  
+  </section>
   
   
 </div>
@@ -292,9 +320,10 @@ form {
             var currentTime = Math.floor(Date.now() / 1000);
 			var currentTimeDate = new Date(currentTime*1000)
 			console.log(currentTimeDate)
-            unixTime.innerHTML = currentTime;
-			unixTimeDate.innerHTML = currentTimeDate;
+            unixTime.textContent = currentTime;
+			unixTimeDate.textContent = currentTimeDate;
         }, 1000);
+		
     </script>
 </body>
 </html>

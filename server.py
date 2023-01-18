@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import base64
 import ipaddress
+import re
 
 app = Flask(__name__)
 
@@ -19,14 +20,26 @@ def unix_time_convert():
  
 @app.route('/test2', methods=['POST'])
 def base64_convert():
+    pattern = re.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$")
+    enconde_counter = 0
+  
     try:
         # Attempt to decode the string with base64
         form_data = request.form
-        base64_convert = base64.b64decode(form_data['base64_data'])
-        return render_template('test.html',base64_convert=base64_convert)
+        base64_convert = form_data['base64_data']
+        if  pattern.match(base64_convert):       
+            while pattern.match(base64_convert):
+                base64_convert = base64.b64decode(base64_convert).decode("utf-8")    
+                enconde_counter += 1
+            encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)
+            return render_template('test.html',base64_convert=base64_convert, encoded_rounds=encoded_rounds)    
+        else:
+             print('error')
+             return render_template('test.html', base64error='Invalid base64 entry')       
+        
     except (binascii.Error, TypeError):
         # If an exception is raised, it's not a valid base64 encoded string
-        return render_template('test.html',base64_convert=base64_convert)
+         return render_template('test.html', base64error='Invalid base64 entry')
         
 
 
