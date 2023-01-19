@@ -16,7 +16,6 @@
         input {
             width: 30%;
             padding: 8px 15px;
-            margin: 8px 0;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 6px;
@@ -48,6 +47,28 @@
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
+			font-weight:bold;
+			border-radius:3px;
+			background-color: #2185d0;
+            text-shadow: none;
+            font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif
+			background-color: #2185d0;
+            color: #fff;
+            text-shadow: none;
+            background-image: none;
+        }
+		
+		
+		
+		copy-button {
+            cursor: pointer;
+			display:block;
+            border: none;
+            padding: 4px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
 			font-weight:bold;
 			border-radius:3px;
 			background-color: #2185d0;
@@ -102,7 +123,7 @@ h1 {
 	padding-left:20px;
 }
 
-h1, h2, h3 {
+h1, h2, h3,h4 {
     font-family: roboto slab,sans-serif;
     font-weight: 400;
     line-height: 1.2em;
@@ -128,8 +149,9 @@ h1 {
 }
 
 .unix-time-font-size{
-	font-size:15px;
+	font-size:20px;
 	color: #822;
+	font-weight:400;
 	
 
 }
@@ -152,7 +174,6 @@ form {
 .h2-input-labels {
     font-size: 1em;
     color: #143470;
-    margin-bottom: 14px;
     padding: 0;
 	font-weight: bold;
 
@@ -182,7 +203,7 @@ form {
     <div class='column'>
       <div class='blue-column'>
         <form action="test" method="post">
-        <h2 for="unix_time" class="h2-input-labels">Enter a Timestap:</h5>
+        <h2 for="unix_time" class="h2-input-labels">Enter a Unix Timestap:</h5>
         <input type="number" name="unix_time" id="unix_time" required>
          <button type="submit" value="Submit"> Convert</button>
 		
@@ -193,7 +214,9 @@ form {
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
 		<h3 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time</h3>
-			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;">{{ date_covert }}</span></p>
+			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ date_covert }}
+			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
+			 </p>
 		{% endif %}
 		</div>
 		<div>
@@ -211,7 +234,7 @@ form {
       <div class='blue-column'>
 	  
         <form action="test2" method="post"> 
-			<h2 class="h2-input-labels"> Enter base64 encoded data for decoding: <br/> <code>Note: Decodes multiple rounds of base64 encoded string</code></h2>
+			<h2 class="h2-input-labels"> Decode base64 string or encode string to base64: <br/> <code>Note: Decodes multiple rounds of base64 encoded string</code></h2>
 			
 			<input name="base64_data" id="base64_data" required></input>
 			<button type="submit" value="Submit">Decode</button>
@@ -222,15 +245,15 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if base64_convert %}
-		<h3 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded data:</h3>
+		<h4 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded/encoded String:</h4>
 			 <div>
 			    <p  style="padding:5px; margin:2px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
 			       <code style="font-size:15px;" id="copy-text">{{ base64_convert }}</code>
-				   <button onclick="copyText('copy-text');return false">Copy text</button>
+				   <button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 				   
 			    </p>
 			 </div>
-			 <p  style="padding:0px; margin:0px"> Encoded rounds: <span class="unix-time-font-size" style="color:red;">{{ encoded_rounds }}</span></p>
+			 <p  style="padding:0px; margin:0px"> Encoded rounds: <span class="unix-time-font-size" style="color:red;font-size:15px;">{{ encoded_rounds }}</span></p>
 			 {% elif base64error %}
 			        <code style="color:red; font-size:15px;"> {{ base64error }}</code>
 		     {% endif %}
@@ -265,10 +288,11 @@ form {
         <div>{% if binary_ip %}
 		<h3 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h3>
 			 <div>
-			    <p  style="padding:3px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  {{ binary_ip }}
-				   
+			    <p  style="padding:3px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  
+				    <span class="unix-time-font-size" style="color:red;"id="copy-text">{{ binary_ip }}</span>
+				   <button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 				</p>
-				    <button onclick="copyText()">Copy text</button>
+				    
 				
 			 </div>
 			  {% elif error %}
@@ -295,7 +319,7 @@ form {
 	       <h2 class="h2-input-labels"> Enter IPv4 and subnet mask in slash notation: <br/> <code>Note: Ouputs the subnet address for the Ipv4 and subnet mask</code></h2>
             <input name="ip" id="ip" required></input>
 	       <label class="h2-input-labels">Subnetmask: /</label>
-		   <input style="width:3%;"  name="subnet_mask" id="ip_subnet" required></input>
+		   <input style="width:5%;"  name="subnet_mask" id="ip_subnet" required></input>
            <button type="submit" value="Submit">Convert</button>
 
 	   </form>
@@ -306,7 +330,9 @@ form {
       <div class='green-column flex-container'>
         <div>{% if ip_subnet %}
 		<h3 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h3>
-			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:red;">{{ ip_subnet }}</span></p>
+			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:red;"id="copy-text">{{ ip_subnet }}
+			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
+			 </p>
 		{% endif %}
 		</div>
 		<div>
@@ -326,9 +352,9 @@ form {
 	  
         <form action="test5" method="post">
 	
-	        <h2  class="h2-input-labels">Enter URL for decoding:</h2>
+	        <h2  class="h2-input-labels">Enter URL to decode:</h2>
             <input name="url_decode" id="url_decode" required></input>    
-            <button type="submit" value="Submit"> Convert</button>
+            <button type="submit" value="Submit"> Decode</button>
 	    </form>
 	
       </div>
@@ -338,10 +364,11 @@ form {
         <div>{% if url_decoded %}
 		<h3 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h3>
 			 <div>
-			    <p  style="padding:3px; margin:0px; width:400px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  {{ url_decoded }}
-				   
+			    <p  style="padding:3px; margin:0px; width:400px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
+             			<span class="unix-time-font-size" style="color:red;"id="text-copy">	{{ url_decoded }}</span>
+				   <button onclick="copyText('text-copy');return false" style="padding:2px;">Copy text</button>
 				</p>
-				    <button onclick="copyText()">Copy text</button>
+				    
 				
 			 </div>
 			  {% elif url_error %}
@@ -382,7 +409,11 @@ form {
 					alert("copied text to clipboard")
 		
 			}
-
+             
+			 window.setInterval(function() {
+				  var elem = document.getElementById('data');
+				  elem.scrollTop = elem.scrollHeight;
+				}, 5000);
         // Update the Unix time every second
         setInterval(function() {
             var currentTime = Math.floor(Date.now() / 1000);

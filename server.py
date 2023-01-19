@@ -14,10 +14,12 @@ def index():
 
 @app.route('/test', methods=['POST'])
 def unix_time_convert():
-    print('reached')
-    form_data = request.form
-    date_covert = datetime.fromtimestamp(int(form_data['unix_time'])).strftime('%b %d, %Y %H:%M:%S')
-    return render_template('test.html',date_covert=date_covert)
+    try:
+        form_data = request.form
+        date_covert = datetime.fromtimestamp(int(form_data['unix_time'])).strftime('%b %d, %Y %H:%M:%S')
+        return render_template('test.html',date_covert=date_covert)
+    except:
+        return render_template('test.html',unix_error="invalid unix timestap")           
  
 @app.route('/test2', methods=['POST'])
 def base64_convert():
@@ -33,10 +35,17 @@ def base64_convert():
                 base64_convert = base64.b64decode(base64_convert).decode("utf-8")    
                 enconde_counter += 1
             encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)
-            return render_template('test.html',base64_convert=base64_convert, encoded_rounds=encoded_rounds)    
+            return render_template('test.html',base64_convert=base64_convert, encoded_rounds=encoded_rounds)
+        elif isinstance(base64_convert, str):
+            while not pattern.match(base64_convert):
+                base64_convert = base64_convert.encode('utf-8')
+                base64_convert =  base64.b64encode(base64_convert).decode('utf-8')
+                enconde_counter += 1
+            encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)    
+            return render_template('test.html',base64_convert=base64_convert,encoded_rounds=encoded_rounds)         
         else:
-             print('error')
-             return render_template('test.html', base64error='Invalid base64 entry')       
+            print('error')
+            return render_template('test.html', base64error='Invalid base64 entry')       
         
     except (binascii.Error, TypeError):
         # If an exception is raised, it's not a valid base64 encoded string
