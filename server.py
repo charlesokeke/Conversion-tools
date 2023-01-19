@@ -14,6 +14,7 @@ def index():
 
 @app.route('/test', methods=['POST'])
 def unix_time_convert():
+    print('reached')
     try:
         form_data = request.form
         date_covert = datetime.fromtimestamp(int(form_data['unix_time'])).strftime('%b %d, %Y %H:%M:%S')

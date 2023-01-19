@@ -245,7 +245,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if base64_convert %}
-		<h4 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded/encoded String:</h4>
+		<h4 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded/Encoded String:</h4>
 			 <div>
 			    <p  style="padding:5px; margin:2px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
 			       <code style="font-size:15px;" id="copy-text">{{ base64_convert }}</code>
@@ -286,7 +286,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if binary_ip %}
-		<h3 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h3>
+		<h4 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h4>
 			 <div>
 			    <p  style="padding:3px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  
 				    <span class="unix-time-font-size" style="color:red;"id="copy-text">{{ binary_ip }}</span>
@@ -329,7 +329,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if ip_subnet %}
-		<h3 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h3>
+		<h4 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h4>
 			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:red;"id="copy-text">{{ ip_subnet }}
 			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 			 </p>
@@ -362,7 +362,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if url_decoded %}
-		<h3 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h3>
+		<h4 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h4>
 			 <div>
 			    <p  style="padding:3px; margin:0px; width:400px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
              			<span class="unix-time-font-size" style="color:red;"id="text-copy">	{{ url_decoded }}</span>

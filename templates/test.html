@@ -217,7 +217,10 @@ form {
 			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ date_covert }}
 			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 			 </p>
-		{% endif %}
+			 {% elif unix_error %}
+			  <code style="color:red; font-size:15px;"> {{ unix_error }}</code>
+			 
+		    {% endif %}
 		</div>
 		<div>
 		  <p  style="padding:0px; margin:0px;font-size:18px"> Unix time in second: <span id="unix-time" class="unix-time-font-size"></span> </p>
