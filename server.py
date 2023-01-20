@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    print("hello")
     return render_template('test.html')
 
 @app.route('/test', methods=['POST'])
@@ -47,7 +46,6 @@ def base64_convert():
             encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)    
             return render_template('test.html',base64_convert=base64_convert,encoded_rounds=encoded_rounds)         
         else:
-            print('error')
             return render_template('test.html', base64error='Invalid base64 entry')       
         
     except (binascii.Error, TypeError):
@@ -137,10 +135,10 @@ def get_url_redirects():
             url_redirects = json.loads(json.dumps(url_redirects))
             return render_template('test.html',url_redirector=url_redirects)
         else:
-            return render_template('test.html',url_error="invalid url") 
+            return render_template('test.html',url_redirect_error="Invalid url") 
         
     except:
-         return render_template('test.html',url_error="invalid url")
+         return render_template('test.html',url_redirect_error="Invalid url")
 
 if __name__ == '__main__':
     app.run(debug=True)
