@@ -4,6 +4,8 @@ import base64
 import ipaddress
 import re
 import urllib
+import requests
+import json
 
 app = Flask(__name__)
 
@@ -113,7 +115,32 @@ def get_url():
             return render_template('test.html',url_error="invalid url") 
         return render_template('test.html',url_decoded=url)
     except:
-         return render_template('test.html',url_error="invalid url")    
+         return render_template('test.html',url_error="invalid url")  
+
+
+@app.route('/test6', methods=['POST'])        
+def get_url_redirects():
+    url_redirects = []
+    
+    try:
+        url = request.form['url_redirector']
+        responses = requests.get(url)
+        final_code_200 = responses.status_code
+        final_url = responses.url
+        
+       
+        if url:
+            for response in responses.history:
+                url_redirects.append({ "url":response.url, "response_code":response.status_code})
+            #print(response.status_code) 
+            url_redirects.append({"url":final_url,"response_code":final_code_200})            
+            url_redirects = json.loads(json.dumps(url_redirects))
+            return render_template('test.html',url_redirector=url_redirects)
+        else:
+            return render_template('test.html',url_error="invalid url") 
+        
+    except:
+         return render_template('test.html',url_error="invalid url")
 
 if __name__ == '__main__':
     app.run(debug=True)

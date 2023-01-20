@@ -5,6 +5,10 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel ="stylesheet">
+	<link rel="stylesheet" 
+      <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+	  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <style>
 	* {
           box-sizing: border-box;
@@ -14,7 +18,7 @@
        
         /* Input styling */
         input {
-            width: 30%;
+            width: 50%;
             padding: 8px 15px;
             box-sizing: border-box;
             border: 1px solid #ccc;
@@ -90,13 +94,15 @@
       .column {
           display: flex;
            flex-direction: column;
-           flex-basis: 80%;
+           flex-basis: 100%;
            
    }
    
      .some-page-wrapper {
              margin: 15px;
-			 padding:30px
+			 padding-top:30px;
+			 padding-left:10px;
+			 padding-right:10px
 			 
 			 
             
@@ -125,7 +131,6 @@ h1 {
 
 h1, h2, h3,h4 {
     font-family: roboto slab,sans-serif;
-    font-weight: 400;
     line-height: 1.2em;
 	
 }
@@ -149,7 +154,6 @@ h1 {
 }
 
 .unix-time-font-size{
-	font-size:20px;
 	color: #822;
 	font-weight:400;
 	
@@ -188,16 +192,39 @@ form {
   word-break: break-all;
   width:200px;
 }
-    </style>
+
+
+a:link { text-decoration: none !important; }
+
+
+a:visited { text-decoration: none; !important}
+
+
+a:hover { text-decoration: none !important; }
+
+
+a:active { text-decoration: none !important; }
+
+
+  
+  </style>
 </head>
 <body>
+
        <div>
-		  <h1> Decoding & Conversion Tools</h1>
+		  <h1> Decoding & Conversion Tools</h1></a>
       </div>
 	  
 	  
   
-   <div class='some-page-wrapper'>
+   <div class='some-page-wrapper row'>
+      <div style="margin-bottom:10px;">
+         
+		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;" class="text-right"> Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"></span> </p>
+		  <p style="padding:0px; margin:0px;font-size:18px; font-weight:600;"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
+		</div>
+   <div class="col-6">
+   
   <section> 
   <div class='row'>
     <div class='column'>
@@ -213,16 +240,16 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
-		<h3 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time</h3>
-			 <p  style="padding:0px; margin:0px"> Converted unix time: <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ date_covert }}
+		<h4 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time:</h4>
+			 <p  style="padding:0px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  <span class="unix-time-font-size" style="color:red;" id="text-copy">{{ date_covert }}
 			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 			 </p>
-		{% endif %}
+			 {% elif unix_error %}
+			  <code style="color:red; font-size:15px;"> {{ unix_error }}</code>
+			 
+		    {% endif %}
 		</div>
-		<div>
-		  <p  style="padding:0px; margin:0px;font-size:18px"> Unix time in second: <span id="unix-time" class="unix-time-font-size"></span> </p>
-		  <p style="padding:0px; margin:0px;font-size:18px;"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
-		</div>
+		
       </div>
     </div>
   </div>
@@ -247,7 +274,7 @@ form {
         <div>{% if base64_convert %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> Base64 Decoded/Encoded String:</h4>
 			 <div>
-			    <p  style="padding:5px; margin:2px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
+			    <p  style="padding:5px; margin:2px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
 			       <code style="font-size:15px;" id="copy-text">{{ base64_convert }}</code>
 				   <button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 				   
@@ -288,7 +315,7 @@ form {
         <div>{% if binary_ip %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h4>
 			 <div>
-			    <p  style="padding:3px; margin:0px; width:300px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  
+			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  
 				    <span class="unix-time-font-size" style="color:red;"id="copy-text">{{ binary_ip }}</span>
 				   <button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 				</p>
@@ -364,8 +391,8 @@ form {
         <div>{% if url_decoded %}
 		<h4 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h4>
 			 <div>
-			    <p  style="padding:3px; margin:0px; width:400px;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
-             			<span class="unix-time-font-size" style="color:red;"id="text-copy">	{{ url_decoded }}</span>
+			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
+             			<span class="unix-time-font-size" style="color:black; line-height:100%; font-size:15px;" id="text-copy">	{{ url_decoded }}</span>
 				   <button onclick="copyText('text-copy');return false" style="padding:2px;">Copy text</button>
 				</p>
 				    
@@ -384,6 +411,73 @@ form {
     </div>
   </div>
   </section>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  </div>
+  
+  <div class="col-6">
+  
+  <section>
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
+	  
+        <form action="test6" method="post">
+	
+	        <h2  class="h2-input-labels">URL Redirect Detector:</h2>
+            <input name="url_redirector" id="url_redirector" required></input>    
+            <button type="submit" value="Submit"> Trace</button>
+	    </form>
+	
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column flex-container'>
+        <div>{% if url_redirector %}
+		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace results:</h4>
+			 
+			 <div>
+			    
+             			<div class="container-fluid">
+						    {% for urls in url_redirector %}
+						<div class="row row-no-gutters">
+							<div class="col-sm-2 d-flex align-content-center" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
+                                   <i class='fas fa-arrow-down' style='font-size:36px'></i><br><br>{{urls.response_code}}</div>
+							<div class="col-sm-10" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
+								<code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:15px;line-height:80%;text-align:center" id={{loop.index}} >
+								{{urls.url}}
+								<button onclick="copyText({{loop.index}});return false"  class="btn btn-outline-secondary">copy text</button>
+								</code>
+								
+							</div>
+						   {% endfor %} 
+				      </div>
+			 </div>
+			  {% elif url_error %}
+			        <p> {{ url_error }}</p>
+		     {% endif %}
+		 
+		</div>
+		<div>
+		
+		  
+		</div>
+      </div>
+    </div>
+  </div>
+  </section>
+  </div>
   
   
 </div>
@@ -424,6 +518,9 @@ form {
         }, 1000);
 		
     </script>
+	
+	
+	
 </body>
 </html>
 </body>
