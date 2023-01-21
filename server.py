@@ -48,7 +48,7 @@ def base64_convert():
         else:
             return render_template('test.html', base64error='Invalid base64 entry')       
         
-    except (binascii.Error, TypeError):
+    except:
         # If an exception is raised, it's not a valid base64 encoded string
          return render_template('test.html', base64error='Invalid base64 entry')
         
