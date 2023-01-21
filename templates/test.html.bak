@@ -100,7 +100,7 @@
    }
    
      .some-page-wrapper {
-             margin: 15px;
+             margin: 100px;
 			 padding-top:30px;
 			 padding-left:10px;
 			 padding-right:10px
@@ -249,7 +249,7 @@ form {
       <div class='blue-column'>
 	  
         <form action="test2" method="post"> 
-			<h2 class="h2-input-labels"> Decode base64 string or encode string to base64: <br/> <code class="">Note: Decodes multiple rounds of base64 encoded string</code><h2/>
+			<h2 class="h2-input-labels"> Decode base64 string or encode string to base64: <br/> <code class="text-muted">Note: Decodes multiple rounds of base64 encoded string</code></h2>
 			
 			<input name="base64_data" id="base64_data" required></input>
 			<button type="submit" value="Submit">Decode</button>
@@ -515,7 +515,10 @@ form {
     </script>
 	
 	
-	
+	<footer class="bg-light fixed-bottom">
+      <div class="container text-center text-black py-3">
+        Copyright ©2022
+      </div>
 </body>
 </html>
 </body>
