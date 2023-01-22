@@ -48,13 +48,13 @@
             cursor: pointer;
 			display:block;
             border: none;
-            padding: 7px;
+            padding: 8px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            font-size: 14px;
-			font-weight:bold;
-			border-radius:3px;
+            font-size: 1rem;
+			font-weight:400;
+			border-radius:4px;
 			background-color: #2185d0;
             text-shadow: none;
             font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif
@@ -230,9 +230,9 @@ form {
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> Converted unix time:</h4>
-			 <p  style="padding:0px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
-			 <span class="unix-time-font-size" style="color:red;" id="text-copy">{{ date_covert }}
-			 </span><button onclick="copyText('copy-text');return false" style="padding:6px;float: right;">Copy text</button>
+			 <p  style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
+			 <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ date_covert }}
+			 </span><button onclick="copyText('copy-text');return false" style="padding:1px;float:right;font-size:15px;overflow:auto;">Copy text</button>
 			 </p>
 			 {% elif unix_error %}
 			  <code style="color:red; font-size:15px;"> {{ unix_error }}</code>
