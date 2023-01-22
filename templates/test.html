@@ -39,7 +39,8 @@
 
             margin-bottom: 10px;
             font-weight: bold;
-			font-family: roboto slab,sans-serif;
+			font-family: roboto slab,sans-serif
+		
         }
         
         /* Button styling */
@@ -205,13 +206,13 @@ form {
 	  
 	  
   
-   <div class='some-page-wrapper row bg-white'>
+   <div class='some-page-wrapper row bg-white' style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%); padding-left:20px;padding-right:20px;padding-bottom:20px;">
       <div style="margin-bottom:10px;">
          
 		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;" class="text-right text-secondary"> Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"></span> </p>
 		  <p style="padding:0px; margin:0px;font-size:18px; font-weight:600;" class="text-secondary"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
 		</div>
-   <div class="col-6">
+   <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:5px">
    
   <section> 
   <div class='row'>
@@ -228,9 +229,10 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
-		<h4 style="margin-bottom:0px;margin-top:0px;"> Epoch Unix time:</h4>
-			 <p  style="padding:0px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  <span class="unix-time-font-size" style="color:red;" id="text-copy">{{ date_covert }}
-			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
+		<h4 style="margin-bottom:0px;margin-top:0px;"> Converted unix time:</h4>
+			 <p  style="padding:0px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
+			 <span class="unix-time-font-size" style="color:red;" id="text-copy">{{ date_covert }}
+			 </span><button onclick="copyText('copy-text');return false" style="padding:6px;float: right;">Copy text</button>
 			 </p>
 			 {% elif unix_error %}
 			  <code style="color:red; font-size:15px;"> {{ unix_error }}</code>
@@ -334,7 +336,7 @@ form {
 	       <h2 class="h2-input-labels"> Enter IPv4 and subnet mask in slash notation: <br/> <code class="text-muted">Note: Ouputs the subnet address for the Ipv4 and subnet mask</code></h2>
             <input name="ip" id="ip" required></input>
 	       <label class="h2-input-labels">Subnetmask: /</label>
-		   <input style="width:5%;"  name="subnet_mask" id="ip_subnet" required></input>
+		   <input style="width:10%;"  name="subnet_mask" id="ip_subnet" required></input>
            <button type="submit" value="Submit">Convert</button>
 
 	   </form>
@@ -348,7 +350,11 @@ form {
 			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:black;"id="copy-text">{{ ip_subnet }}
 			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 			 </p>
-		{% endif %}
+			 {% elif ip_subnet_error %}
+			 
+				<p class="alert alert-danger">{{ip_subnet_error}}</p>
+			   
+		     {% endif %}
 		</div>
 		<div>
 		
@@ -414,7 +420,7 @@ form {
   
   </div>
   
-  <div class="col-6">
+  <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:5px;">
   
   <section>
   <div class='row'>

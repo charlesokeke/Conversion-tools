@@ -89,11 +89,14 @@ def ip_convert():
 
 @app.route('/test4', methods=['POST'])
 def get_ip_subnet():
-    subnet_mask = request.form['subnet_mask']
-    ip_address= request.form['ip']
-    ip = ipaddress.ip_address(ip_address)
-    ip_subnet = str(ipaddress.ip_network(ip_address + '/' + subnet_mask, strict=False))
-    return render_template('test.html',ip_subnet=ip_subnet) 
+    try:
+        subnet_mask = request.form['subnet_mask']
+        ip_address= request.form['ip']
+        ip = ipaddress.ip_address(ip_address)
+        ip_subnet = str(ipaddress.ip_network(ip_address + '/' + subnet_mask, strict=False))
+        return render_template('test.html',ip_subnet=ip_subnet) 
+    except:
+         return render_template('test.html',ip_subnet_error="Invalid entry")   
 
 
 @app.route('/test5', methods=['POST'])
