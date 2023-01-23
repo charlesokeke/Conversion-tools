@@ -209,7 +209,7 @@ form {
    <div class='some-page-wrapper row bg-white' style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%); padding-left:20px;padding-right:20px;padding-bottom:20px;">
       <div style="margin-bottom:10px;">
          
-		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;" class="text-right text-secondary"> Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"></span> </p>
+		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif" class="text-right text-secondary"> Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"></span> </p>
 		  <p style="padding:0px; margin:0px;font-size:18px; font-weight:600;" class="text-secondary"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
 		</div>
    <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:5px">
@@ -450,7 +450,7 @@ form {
 						<div class="row">
 							      {% if urls.response_code == 200 %}
                                           <div class="col-sm-2 d-flex align-content-center" style="color:green; font-weight:600; background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);">
-                                           <div style="display:flex;justify-content:center; flex-direction:column;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br><span>{{urls.response_code}}</span></div>
+                                           <div style="display:flex;justify-content:center; flex-direction:column;margin:0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br><span>{{urls.response_code}}</span></div>
 								         </div>
 								  {% else %}
 										<div class="col-sm-2 d-flex align-content-center text-danger" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
