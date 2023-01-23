@@ -13,7 +13,7 @@ app = Flask(__name__)
 def index():
     return render_template('test.html')
 
-@app.route('/test', methods=['POST'])
+@app.route('/test', methods=['POST','GET'])
 def unix_time_convert():
     print('reached')
     try:
@@ -23,7 +23,7 @@ def unix_time_convert():
     except:
         return render_template('test.html',unix_error="invalid unix timestap")           
  
-@app.route('/test2', methods=['POST'])
+@app.route('/test2', methods=['POST','GET'])
 def base64_convert():
     pattern = re.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$")
     enconde_counter = 0
@@ -54,7 +54,7 @@ def base64_convert():
         
 
 
-@app.route('/test3', methods=['POST'])
+@app.route('/test3', methods=['POST','GET'])
 def ip_convert():
  
     ip_address = request.form['ip_convert']
@@ -87,7 +87,7 @@ def ip_convert():
     
 
 
-@app.route('/test4', methods=['POST'])
+@app.route('/test4', methods=['POST','GET'])
 def get_ip_subnet():
     try:
         subnet_mask = request.form['subnet_mask']
@@ -99,7 +99,7 @@ def get_ip_subnet():
          return render_template('test.html',ip_subnet_error="Invalid entry")   
 
 
-@app.route('/test5', methods=['POST'])
+@app.route('/test5', methods=['POST','GET'])
 def get_url():
     
     try:
@@ -119,7 +119,7 @@ def get_url():
          return render_template('test.html',url_error="invalid url")  
 
 
-@app.route('/test6', methods=['POST'])        
+@app.route('/test6', methods=['POST','GET'])        
 def get_url_redirects():
     url_redirects = []
     
