@@ -21,4 +21,7 @@ regex:^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$
 Declare a global variable with the value of the user
 set another  global variable to a value of true(this will be used for outer While loop)
 
-while 
+
+Jan 23, 1991 15:47:45
+appsendmailforall@gmail.com
+appsendmail416_11@2

@@ -142,6 +142,7 @@ def get_url_redirects():
         
     except:
          return render_template('test.html',url_redirect_error="Invalid url")
+         
 
 if __name__ == '__main__':
     app.run(debug=True)

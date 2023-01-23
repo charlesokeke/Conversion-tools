@@ -313,7 +313,7 @@ form {
 				
 			 </div>
 			  {% elif error %}
-			        <p> {{ error }}</p>
+			        <p style="color:red;"> {{ error }}</p>
 		     {% endif %}
 		 
 		</div>
@@ -347,12 +347,14 @@ form {
       <div class='green-column flex-container'>
         <div>{% if ip_subnet %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h4>
-			 <p  style="padding:0px; margin:0px"> Subnet: <span class="unix-time-font-size" style="color:black;"id="copy-text">{{ ip_subnet }}
-			 </span><button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
+			 <p style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;"> 
+			      Subnet: <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ ip_subnet }}
+			     </span>
+				 <button onclick="copyText('copy-text');return false" style="padding:2px; float:right;">Copy text</button>
 			 </p>
 			 {% elif ip_subnet_error %}
 			 
-				<p class="alert alert-danger">{{ip_subnet_error}}</p>
+				<p style="color:red;">{{ip_subnet_error}}</p>
 			   
 		     {% endif %}
 		</div>
@@ -387,13 +389,13 @@ form {
 			 <div>
 			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
              			<span class="unix-time-font-size" style="color:black; line-height:100%; font-size:15px;" id="text-copy">	{{ url_decoded }}</span>
-				   <button onclick="copyText('text-copy');return false" style="padding:2px;">Copy text</button>
+				   <button onclick="copyText('text-copy');return false" style="padding:2px; float:right">Copy text</button>
 				</p>
 				    
 				
 			 </div>
 			  {% elif url_error %}
-			        <p> {{ url_error }}</p>
+			        <p style="color:red;"> {{ url_error }}</p>
 		     {% endif %}
 		 
 		</div>
@@ -420,20 +422,20 @@ form {
   
   </div>
   
-  <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:5px;">
+  <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:20px;">
   
   <section>
   <div class='row'>
     <div class='column'>
       <div class='blue-column'>
 	  
-        <form action="test6" method="post">
-	
-	        <h2  class="h2-input-labels">URL Redirect Tracer:</h2>
+        <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
+	      
+	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
             <input name="url_redirector" id="url_redirector" required></input>    
-            <button type="submit" value="Submit"> Trace</button>
+            <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
 	    </form>
-	
+	     
       </div>
     </div>
     <div class='column'>
@@ -447,12 +449,12 @@ form {
 						    {% for urls in url_redirector %}
 						<div class="row">
 							      {% if urls.response_code == 200 %}
-                                          <div class="col-sm-2 d-flex align-content-center" style="color:green; font-weight:600; background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
-                                    <i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br>{{urls.response_code}}
-								   </div>
+                                          <div class="col-sm-2 d-flex align-content-center" style="color:green; font-weight:600; background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);">
+                                           <div style="display:flex;justify-content:center; flex-direction:column;margin:0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br><span>{{urls.response_code}}</span></div>
+								         </div>
 								  {% else %}
 										<div class="col-sm-2 d-flex align-content-center text-danger" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
-                                        <i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br>{{urls.response_code}}
+                                           <div style="display:flex;justify-content:center; flex-direction:column; margin: 0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br>{{urls.response_code}}</div>
 								       </div>
 								  {% endif %}
 							<div class="col-sm-10" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
@@ -466,7 +468,7 @@ form {
 				      </div>
 			 </div>
 			  {% elif url_redirect_error %}
-			        <p> {{ url_redirect_error }}</p>
+			        <p style="color:red;"> {{ url_redirect_error }}</p>
 		     {% endif %}
 		 
 		</div>
