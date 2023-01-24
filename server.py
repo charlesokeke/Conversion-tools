@@ -116,7 +116,7 @@ def get_url():
             return render_template('test.html',url_error="invalid url") 
         return render_template('test.html',url_decoded=url)
     except:
-         return render_template('test.html',url_error="invalid url")  
+         return render_template('test.html',url_error="Invalid url. Enter the url in the format http://")  
 
 
 @app.route('/test6', methods=['POST','GET'])        

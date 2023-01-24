@@ -377,7 +377,7 @@ form {
         <form action="test5" method="post">
 	
 	        <h2  class="h2-input-labels">Enter URL to decode:</h2>
-            <input name="url_decode" id="url_decode" required></input>    
+            <input name="url_decode" id="url_decode" placeholder="http://"  required></input>    
             <button type="submit" value="Submit"> Decode</button>
 	    </form>
 	
@@ -433,7 +433,7 @@ form {
         <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
-            <input name="url_redirector" id="url_redirector" required></input>    
+            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
             <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
 	    </form>
 	     

@@ -209,7 +209,8 @@ form {
    <div class='some-page-wrapper row bg-white' style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%); padding-left:20px;padding-right:20px;padding-bottom:20px;">
       <div style="margin-bottom:10px;">
          
-		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif" class="text-right text-secondary"> Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"></span> </p>
+		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif" class="text-right text-secondary">
+		  Unix time in seconds: <span id="unix-time" class="unix-time-font-size display-4"style="font-size:3rem"></span> </p>
 		  <p style="padding:0px; margin:0px;font-size:18px; font-weight:600;" class="text-secondary"> Local time zone: <span id="unix-time-date" class="unix-time-font-size"></span> </p>
 		</div>
    <div class="col-6" style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);padding-top:5px">
@@ -376,7 +377,7 @@ form {
         <form action="test5" method="post">
 	
 	        <h2  class="h2-input-labels">Enter URL to decode:</h2>
-            <input name="url_decode" id="url_decode" required></input>    
+            <input name="url_decode" id="url_decode" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
             <button type="submit" value="Submit"> Decode</button>
 	    </form>
 	
@@ -432,7 +433,7 @@ form {
         <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
-            <input name="url_redirector" id="url_redirector" required></input>    
+            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$" required></input>    
             <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
 	    </form>
 	     
