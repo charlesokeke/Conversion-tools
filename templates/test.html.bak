@@ -433,15 +433,15 @@ form {
         <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
-            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
-            <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
+            <input name="url_redirector" id="url_redirector" placeholder="http://"  required></input>    
+            <button type="submit" value="Submit" style="margin-right:35px;" onclick="clearRedirectedUrlAndAddSpinner()"> Start tracing</button>
 	    </form>
 	     
       </div>
     </div>
     <div class='column'>
       <div class='green-column flex-container'>
-        <div>{% if url_redirector %}
+        <div id="redirect_container">{% if url_redirector %}
 		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace results:</h4>
 			 
 			 <div>
@@ -454,7 +454,7 @@ form {
                                            <div style="display:flex;justify-content:center; flex-direction:column;margin:0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br><span>{{urls.response_code}}</span></div>
 								         </div>
 								  {% else %}
-										<div class="col-sm-2 d-flex align-content-center" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);color:#822;">
+										<div class="col-sm-2 d-flex align-content-center text-danger" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
                                            <div style="display:flex;justify-content:center; flex-direction:column; margin: 0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br>{{urls.response_code}}</div>
 								       </div>
 								  {% endif %}
@@ -521,6 +521,17 @@ form {
 			unixTimeDate.textContent = currentTimeDate;
         }, 1000);
 		
+		
+		function clearRedirectedUrlAndAddSpinner(){
+		if(document.getElementById("url_redirector").value){
+		       var spinner = '<div class="d-flex justify-content-center"><div class="spinner-border text-secondary" role="status"> <span class="sr-only">Loading...</span></div></div>'
+		       var urlContainer = document.getElementById("redirect_container")
+               urlContainer.innerHTML = spinner
+		
+		
+		}
+		
+		}
     </script>
 	
 	

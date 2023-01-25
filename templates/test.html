@@ -389,7 +389,7 @@ form {
 		<h4 style="margin-bottom:0px;margin-top:0px;">  Decoded URL:</h4>
 			 <div>
 			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="data" > 
-             			<span class="unix-time-font-size" style="color:black; line-height:100%; font-size:15px;" id="text-copy">	{{ url_decoded }}</span>
+             			<span class="unix-time-font-size" style="color:black; line-height:100%; font-size:13px;" id="text-copy">	{{ url_decoded }}</span>
 				   <button onclick="copyText('text-copy');return false" style="padding:2px; float:right">Copy text</button>
 				</p>
 				    
@@ -433,15 +433,15 @@ form {
         <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
-            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
-            <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
+            <input name="url_redirector" id="url_redirector" placeholder="http://"  required></input>    
+            <button type="submit" value="Submit" style="margin-right:35px;" onclick="clearRedirectedUrlAndAddSpinner()"> Start tracing</button>
 	    </form>
 	     
       </div>
     </div>
     <div class='column'>
       <div class='green-column flex-container'>
-        <div>{% if url_redirector %}
+        <div id="redirect_container">{% if url_redirector %}
 		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace results:</h4>
 			 
 			 <div>
@@ -521,6 +521,17 @@ form {
 			unixTimeDate.textContent = currentTimeDate;
         }, 1000);
 		
+		
+		function clearRedirectedUrlAndAddSpinner(){
+		if(document.getElementById("url_redirector").value){
+		       var spinner = '<div class="d-flex justify-content-center"><div class="spinner-border text-secondary" role="status"> <span class="sr-only">Loading...</span></div></div>'
+		       var urlContainer = document.getElementById("redirect_container")
+               urlContainer.innerHTML = spinner
+		
+		
+		}
+		
+		}
     </script>
 	
 	
