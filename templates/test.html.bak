@@ -442,12 +442,14 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div id="redirect_container">{% if url_redirector %}
-		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace results:</h4>
+		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace URL:</h4>
 			 
 			 <div>
 			    
              			<div class="container-fluid">
 						    {% for urls in url_redirector %}
+							
+							
 						<div class="row">
 							      {% if urls.response_code == 200 %}
                                           <div class="col-sm-2 d-flex align-content-center" style="color:green; font-weight:600; background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);">
@@ -465,8 +467,9 @@ form {
 								</code>
 								</div>
 							</div>
+							</div>
 						   {% endfor %} 
-				      </div>
+				      
 			 </div>
 			  {% elif url_redirect_error %}
 			        <p style="color:red;"> {{ url_redirect_error }}</p>
