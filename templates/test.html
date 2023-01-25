@@ -459,7 +459,7 @@ form {
 								       </div>
 								  {% endif %}
 							<div class="col-sm-10" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
-								<div class="container"><code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:13px;line-height:80%;text-align:center" id={{loop.index}} >
+								<div class="container"><code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:13px;line-height:80%;text-align:right" id={{loop.index}} >
 								    {{urls.url}}
 								<button onclick="copyText({{loop.index}});return false"  class="btn btn-light">copy</button>
 								</code>
@@ -508,15 +508,10 @@ form {
 		
 			}
              
-			 window.setInterval(function() {
-				  var elem = document.getElementById('data');
-				  elem.scrollTop = elem.scrollHeight;
-				}, 5000);
         // Update the Unix time every second
         setInterval(function() {
             var currentTime = Math.floor(Date.now() / 1000);
 			var currentTimeDate = new Date(currentTime*1000)
-			console.log(currentTimeDate)
             unixTime.textContent = currentTime;
 			unixTimeDate.textContent = currentTimeDate;
         }, 1000);
