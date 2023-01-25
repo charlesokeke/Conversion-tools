@@ -459,11 +459,11 @@ form {
 								       </div>
 								  {% endif %}
 							<div class="col-sm-10" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
-								<code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:15px;line-height:80%;text-align:center" id={{loop.index}} >
-								{{urls.url}}
+								<div class="container"><code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:13px;line-height:80%;text-align:center" id={{loop.index}} >
+								    {{urls.url}}
 								<button onclick="copyText({{loop.index}});return false"  class="btn btn-light">copy</button>
 								</code>
-								
+								</div>
 							</div>
 						   {% endfor %} 
 				      </div>

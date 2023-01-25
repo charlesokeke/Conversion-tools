@@ -377,7 +377,7 @@ form {
         <form action="test5" method="post">
 	
 	        <h2  class="h2-input-labels">Enter URL to decode:</h2>
-            <input name="url_decode" id="url_decode" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
+            <input name="url_decode" id="url_decode" placeholder="http://"  required></input>    
             <button type="submit" value="Submit"> Decode</button>
 	    </form>
 	
@@ -433,7 +433,7 @@ form {
         <form action="test6" method="post" style="display:flex;justify-content:space-around;align-items:center;">
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
-            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$" required></input>    
+            <input name="url_redirector" id="url_redirector" placeholder="http://" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)" required></input>    
             <button type="submit" value="Submit" style="margin-right:35px;"> Start tracing</button>
 	    </form>
 	     
@@ -454,16 +454,16 @@ form {
                                            <div style="display:flex;justify-content:center; flex-direction:column;margin:0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br><span>{{urls.response_code}}</span></div>
 								         </div>
 								  {% else %}
-										<div class="col-sm-2 d-flex align-content-center text-danger" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
+										<div class="col-sm-2 d-flex align-content-center" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);color:#822;">
                                            <div style="display:flex;justify-content:center; flex-direction:column; margin: 0 auto;"><i class='fas fa-arrow-down' style='font-size:20px'></i> <br><br>{{urls.response_code}}</div>
 								       </div>
 								  {% endif %}
 							<div class="col-sm-10" style="background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1)">
-								<code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:15px;line-height:80%;text-align:center" id={{loop.index}} >
-								{{urls.url}}
+								<div class="container"><code  style="padding:3px; margin:0px; width:100%;word-break: break-all;color:black;font-size:13px;line-height:80%;text-align:center" id={{loop.index}} >
+								    {{urls.url}}
 								<button onclick="copyText({{loop.index}});return false"  class="btn btn-light">copy</button>
 								</code>
-								
+								</div>
 							</div>
 						   {% endfor %} 
 				      </div>
