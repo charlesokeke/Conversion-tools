@@ -448,6 +448,8 @@ form {
 			    
              			<div class="container-fluid">
 						    {% for urls in url_redirector %}
+							
+							
 						<div class="row">
 							      {% if urls.response_code == 200 %}
                                           <div class="col-sm-2 d-flex align-content-center" style="color:green; font-weight:600; background-color:#fff;margin-bottom:10px;border: 1px solid rgba(34,36,38,.1);">
@@ -465,8 +467,9 @@ form {
 								</code>
 								</div>
 							</div>
+							</div>
 						   {% endfor %} 
-				      </div>
+				      
 			 </div>
 			  {% elif url_redirect_error %}
 			        <p style="color:red;"> {{ url_redirect_error }}</p>
