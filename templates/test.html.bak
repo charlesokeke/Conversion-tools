@@ -434,7 +434,7 @@ form {
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
             <input name="url_redirector" id="url_redirector" placeholder="http://"  required></input>    
-            <button type="submit" value="Submit" style="margin-right:35px;" onclick="clearRedirectedUrlAndAddSpinner()"> Start tracing</button>
+            <button type="submit" value="Submit" style="margin-right:35px;" onclick="clearRedirectedUrlAndAddSpinner()"> Trace URL</button>
 	    </form>
 	     
       </div>
@@ -442,7 +442,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div id="redirect_container">{% if url_redirector %}
-		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace URL:</h4>
+		<h4 style="margin-bottom:0px;margin-top:0px;" class="text-center">  Trace results:</h4>
 			 
 			 <div>
 			    
