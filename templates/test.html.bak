@@ -102,9 +102,7 @@
    
      .some-page-wrapper {
              margin: 100px;
-			 padding-top:30px;
-			 padding-left:10px;
-			 padding-right:10px
+			
 			 
 			 
             
@@ -201,12 +199,20 @@ form {
 <body class="bg-light">
 
        <div>
-		  <h1> Decoding & Conversion Tools</h1></a>
+		  <h1> DTC</h1></a>
       </div>
 	  
 	  
   
-   <div class='some-page-wrapper row bg-white' style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%); padding-left:20px;padding-right:20px;padding-bottom:20px;">
+   <div class='some-page-wrapper row bg-white' style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 6%), 0 2px 5px 0 rgb(0 0 0 / 20%);">
+	   <div style="border-bottom:1px solid #dedede;margin-bottom:50px;background-color:#f8f9fa">
+	        <p class="" style="padding:30px 10px 10px 10px;color:#822;margin: 0 auto;text-align:center;justify-content:center; width:60%;font-size:24px;font-weight:200;font-family: Optimist,Arial,Helvetica,sans-serif;">
+               DTC is a set of tools used for URL tracing, decoding base64 encoded strings,
+			   unix time conversion, IPv4/IPv6 conversion and URL decoding.
+            </p>
+	   
+	   </div>
+      
       <div style="margin-bottom:10px;">
          
 		  <p  style="padding:0px; margin:0px; font-weight:600;font-size:18px;font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif" class="text-right text-secondary">
@@ -434,7 +440,7 @@ form {
 	      
 	        <h2  class="h2-input-labels"> Enter URL for redirect tracing: </h2>
             <input name="url_redirector" id="url_redirector" placeholder="http://"  required></input>    
-            <button type="submit" value="Submit" style="margin-left:0px;" onclick="clearRedirectedUrlAndAddSpinner()"> Trace</button>
+            <button type="submit" value="Submit" style="margin-right:25px;" onclick="clearRedirectedUrlAndAddSpinner()"> Trace</button>
 	    </form>
 	     
       </div>
@@ -446,7 +452,7 @@ form {
 			 
 			 <div>
 			    
-             			<div class="container-fluid">
+             			<div class="container-fluid" style="height:700px;overflow-y:scroll;">
 						    {% for urls in url_redirector %}
 							
 							
