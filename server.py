@@ -57,7 +57,7 @@ def base64_convert():
 @app.route('/test3', methods=['POST','GET'])
 def ip_convert():
  
-    ip_address = request.form['ip_convert']
+    ip_address = request.form['ip_convert'].replace(" ", "")
     print(ip_address)
 
     try:
