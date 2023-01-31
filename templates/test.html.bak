@@ -450,7 +450,7 @@ form {
         <div id="redirect_container">{% if url_redirector %}
 		<div style="display:flex; justify-content:space-between;">
 		<small>Response code</small>
-		<h4 style="margin-bottom:0px;margin-top:0px;align-self:center;" class="text-center">  Trace results:</h4>
+		<h4 style="margin-bottom:0px;margin-top:0px;align-self:center; width:80%;" class="text-center">  Trace results:</h4>
 		</div>	 
 			 <div>
 			    
