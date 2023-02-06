@@ -236,7 +236,7 @@ form {
       <div class='green-column flex-container'>
         <div>{% if date_covert %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> Converted unix time:</h4>
-			 <p  style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;">  
+			 <p  style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;" id="unix-time-scroll">  
 			 <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ date_covert }}
 			 </span><button onclick="copyText('copy-text');return false" style="padding:1px;float:right;font-size:15px;overflow:auto;">Copy text</button>
 			 </p>
@@ -311,7 +311,7 @@ form {
         <div>{% if binary_ip %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> {{ip_version}} Binary Notation:</h4>
 			 <div>
-			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em">  
+			    <p  style="padding:3px; margin:0px; width:50%;word-break: break-all;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em" id="ip-binary-notation">  
 				    <span class="unix-time-font-size" style="color:black;"id="copy-text">{{ binary_ip }}</span>
 				   <button onclick="copyText('copy-text');return false" style="padding:2px;">Copy text</button>
 				</p>
@@ -507,9 +507,9 @@ form {
         var unixTime = document.getElementById("unix-time");
 		var unixTimeDate = document.getElementById("unix-time-date");
 		
-		if (document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll")){
+		if (document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll") || document.getElementById("ip-binary-notation") || document.getElementById("unix-time-scroll")){
 		
-			var element =  document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll")
+			var element =  document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll") || document.getElementById("ip-binary-notation") ||document.getElementById("unix-time-scroll")
 			element.scrollIntoView()
 		
 		}
