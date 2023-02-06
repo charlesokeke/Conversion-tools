@@ -353,7 +353,7 @@ form {
       <div class='green-column flex-container'>
         <div>{% if ip_subnet %}
 		<h4 style="margin-bottom:0px;margin-top:0px;"> Subnet address:</h4>
-			 <p style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;"> 
+			 <p style="padding:2px; margin:0px;width:50%;box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;" id="subnet-scroll"> 
 			      Subnet: <span class="unix-time-font-size" style="color:red;" id="copy-text">{{ ip_subnet }}
 			     </span>
 				 <button onclick="copyText('copy-text');return false" style="padding:2px; float:right;">Copy text</button>
@@ -447,7 +447,7 @@ form {
     <div class='column'>
       <div class='green-column flex-container'>
         <div id="redirect_container">{% if url_redirector %}
-		<div style="display:flex; justify-content:space-between;">
+		<div style="display:flex; justify-content:space-between;background-color:#eee;">
 		<small>Response code</small>
 		<h4 style="margin-bottom:0px;margin-top:0px;align-self:center; width:80%;padding-right:45px;" class="text-center">  Trace results:</h4>
 		</div>	 
@@ -506,6 +506,14 @@ form {
         // Get the element where the Unix time will be displayed
         var unixTime = document.getElementById("unix-time");
 		var unixTimeDate = document.getElementById("unix-time-date");
+		
+		if (document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll")){
+		
+			var element =  document.getElementById("scroll-to-decode-box") || document.getElementById("subnet-scroll")
+			element.scrollIntoView()
+		
+		}
+		
 		function copyText(id) {
               
 					var r = document.createRange();
