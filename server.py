@@ -57,10 +57,9 @@ def base64_convert():
 @app.route('/test3', methods=['POST','GET'])
 def ip_convert():
  
-    ip_address = request.form['ip_convert'].replace(" ", "")
-    print(ip_address)
-
+    
     try:
+        ip_address = request.form['ip_convert'].replace(" ", "")
         # Convert the address to binary
         binary_ip = ""
         if isinstance(ipaddress.ip_address(ip_address),ipaddress.IPv4Address):
@@ -81,7 +80,7 @@ def ip_convert():
         # Remove the last ":"
             binary_ip = binary_ip[:-1]
             return render_template('test.html',binary_ip=binary_ip, ip_version="IPV6")    
-    except ValueError:
+    except:
         return render_template('test.html',error="Invalid IP address")        
     
     
