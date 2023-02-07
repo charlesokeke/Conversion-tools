@@ -479,7 +479,7 @@ form {
 				      
 			 </div>
 			  {% elif url_redirect_error %}
-			        <small style="color:red;text-align:center"> {{ url_redirect_error }}</small>
+			        <small style="color:red;margin: 0 auto;"> {{ url_redirect_error }}</small>
 		     {% endif %}
 		 
 		</div>
