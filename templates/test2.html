@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conversion Tools</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background: #f5f5f5;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: 700;
+      color: #333;
+    }
+    .header-section {
+      background: #fff;
+      padding: 30px 15px;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header-section h1 {
+      font-size: 2.5rem;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .card-header {
+      background-color: #2185d0;
+      color: #fff;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      font-size: 1.25rem;
+    }
+    .card-body label {
+      font-weight: 600;
+    }
+    .btn-copy {
+      font-size: 0.8rem;
+      padding: 3px 8px;
+    }
+    .result-box {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      word-wrap: break-word;
+      font-family: monospace;
+    }
+    .footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 15px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Header -->
+  <div class="header-section">
+    <h1>DTC Conversion Tools</h1>
+    <p class="lead text-muted">A set of modern conversion tools: Unix time, Base64, IP conversions, URL decode & redirect trace</p>
+  </div>
+  
+  <div class="container">
+    <div class="row g-4">
+      <!-- Unix Timestamp Converter -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Unix Timestamp Converter</div>
+          <div class="card-body">
+            <form id="unixForm">
+              <div class="mb-3">
+                <label for="unixInput" class="form-label">Enter Unix Timestamp:</label>
+                <input type="number" class="form-control" id="unixInput" placeholder="e.g., 1609459200" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Convert</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <strong>Unix Time:</strong> <span id="mockUnixTime">1609459200</span><br>
+              <strong>Date:</strong> <span id="mockUnixDate">Fri Jan 01 2021 00:00:00 GMT</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('mockUnixDate')"><i class="fa fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Base64 Converter -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Base64 Converter</div>
+          <div class="card-body">
+            <form id="base64Form">
+              <div class="mb-3">
+                <label for="base64Input" class="form-label">Enter text or Base64 encoded string:</label>
+                <input type="text" class="form-control" id="base64Input" placeholder="Hello, World!" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Decode / Encode</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <strong>Output:</strong> <span id="mockBase64">SGVsbG8sIFdvcmxkIQ==</span><br>
+              <small>Decoded rounds: <span id="mockBase64Rounds">2</span></small>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('mockBase64')"><i class="fa fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- IP Converter -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">IP to Binary Converter</div>
+          <div class="card-body">
+            <form id="ipForm">
+              <div class="mb-3">
+                <label for="ipInput" class="form-label">Enter IPv4/IPv6 Address:</label>
+                <input type="text" class="form-control" id="ipInput" placeholder="e.g., 192.168.1.1" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Convert</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <strong>Binary Notation:</strong> <span id="mockBinaryIP">11000000.10101000.00000001.00000001</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('mockBinaryIP')"><i class="fa fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- IPv4 Subnet Calculator -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">IPv4 Subnet Calculator</div>
+          <div class="card-body">
+            <form id="subnetForm">
+              <div class="mb-3">
+                <label for="ipSubnetInput" class="form-label">Enter IPv4 Address:</label>
+                <input type="text" class="form-control" id="ipSubnetInput" placeholder="e.g., 192.168.1.10" required>
+              </div>
+              <div class="mb-3">
+                <label for="subnetMask" class="form-label">Subnet Mask (CIDR):</label>
+                <input type="number" class="form-control" id="subnetMask" placeholder="e.g., 24" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Calculate</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <strong>Subnet Address:</strong> <span id="mockSubnet">192.168.1.0</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('mockSubnet')"><i class="fa fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- URL Decoder -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">URL Decoder</div>
+          <div class="card-body">
+            <form id="urlDecodeForm">
+              <div class="mb-3">
+                <label for="urlInput" class="form-label">Enter URL to decode:</label>
+                <input type="url" class="form-control" id="urlInput" placeholder="http://example.com/%20test" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Decode</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <strong>Decoded URL:</strong> <span id="mockDecodedURL">http://example.com/ test</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('mockDecodedURL')"><i class="fa fa-copy"></i> Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- URL Redirect Tracer -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">URL Redirect Tracer</div>
+          <div class="card-body">
+            <form id="redirectForm">
+              <div class="mb-3">
+                <label for="redirectInput" class="form-label">Enter URL for redirect tracing:</label>
+                <input type="url" class="form-control" id="redirectInput" placeholder="http://example.com" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Trace</button>
+            </form>
+            <!-- Mock conversion output -->
+            <div class="result-box mt-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <small>Response Code</small>
+                <strong>Trace Results</strong>
+              </div>
+              <div class="mb-2">
+                <span class="badge bg-success me-2">200</span>
+                <span class="text-break" id="mockRedirect1">http://example.com/redirect1</span>
+                <button class="btn btn-sm btn-outline-secondary btn-copy" onclick="copyToClipboard('mockRedirect1')"><i class="fa fa-copy"></i></button>
+              </div>
+              <div class="mb-2">
+                <span class="badge bg-danger me-2">404</span>
+                <span class="text-break" id="mockRedirect2">http://example.com/redirect2</span>
+                <button class="btn btn-sm btn-outline-secondary btn-copy" onclick="copyToClipboard('mockRedirect2')"><i class="fa fa-copy"></i></button>
+              </div>
+              <!-- Add more mock entries as needed -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div><!-- End Row -->
+  </div><!-- End Container -->
+  
+  <!-- Footer -->
+  <footer class="footer">
+    Copyright © 2022 Chukwuemeka Okeke
+  </footer>
+  
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Script for Copy functionality -->
+  <script>
+    function copyToClipboard(elementId) {
+      const text = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied to clipboard!"))
+        .catch(err => console.error("Failed to copy: ", err));
+    }
 
+    // Example: simulate a live Unix time update in the mock card (optional)
+    setInterval(() => {
+      const unixTimeEl = document.getElementById('mockUnixTime');
+      const unixDateEl = document.getElementById('mockUnixDate');
+      const currentTime = Math.floor(Date.now() / 1000);
+      unixTimeEl.textContent = currentTime;
+      unixDateEl.textContent = new Date(currentTime * 1000).toLocaleString();
+    }, 1000);
+  </script>
+</body>
+</html>
