@@ -54,7 +54,7 @@ def base64_convert():
                     break
 
             if encode_counter > 0:
-                rounds_message = f"This object was encoded {encode_counter} time(s)"
+                rounds_message = f"This object was decoded {encode_counter} time(s)"
                 return render_template('test.html', base64_convert=decoded_str, encoded_rounds=rounds_message)
             else:
                 # Otherwise, encode the input string once.
