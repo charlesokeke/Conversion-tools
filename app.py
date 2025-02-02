@@ -2,146 +2,147 @@ from flask import Flask, render_template, request
 from datetime import datetime
 import base64
 import ipaddress
-import re
-import urllib
+import urllib.parse
 import requests
 import json
+import logging
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+
+# Inject the visitor's IP address into every template context
+@app.context_processor
+def inject_visitor_ip():
+    # If behind a proxy, X-Forwarded-For can contain a list of IPs.
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+    return dict(visitor_ip=ip)
 
 @app.route('/')
 def index():
     return render_template('test.html')
 
-@app.route('/test', methods=['POST','GET'])
+@app.route('/test', methods=['POST', 'GET'])
 def unix_time_convert():
-    print('reached')
-    try:
-        form_data = request.form
-        date_covert = datetime.fromtimestamp(int(form_data['unix_time'])).strftime('%b %d, %Y %H:%M:%S')
-        return render_template('test.html',date_covert=date_covert)
-    except:
-        return render_template('test.html',unix_error="invalid unix timestap")           
- 
-@app.route('/test2', methods=['POST','GET'])
+    if request.method == 'POST':
+        try:
+            unix_timestamp = int(request.form.get('unix_time', ''))
+            date_convert = datetime.fromtimestamp(unix_timestamp).strftime('%b %d, %Y %H:%M:%S')
+            return render_template('test.html', date_covert=date_convert)
+        except Exception as e:
+            logging.exception("Error converting Unix timestamp")
+            return render_template('test.html', unix_error="Invalid Unix timestamp")
+    return render_template('test.html')
+
+@app.route('/test2', methods=['POST', 'GET'])
 def base64_convert():
-    pattern = re.compile("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$")
-    enconde_counter = 0
-  
-    try:
-        # Attempt to decode the string with base64
-        form_data = request.form
-        base64_convert = form_data['base64_data']
-        if  pattern.match(base64_convert):       
-            while pattern.match(base64_convert):
-                base64_convert = base64.b64decode(base64_convert).decode("utf-8")    
-                enconde_counter += 1
-            encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)
-            return render_template('test.html',base64_convert=base64_convert, encoded_rounds=encoded_rounds)
-        elif isinstance(base64_convert, str):
-            while not pattern.match(base64_convert):
-                base64_convert = base64_convert.encode('utf-8')
-                base64_convert =  base64.b64encode(base64_convert).decode('utf-8')
-                enconde_counter += 1
-            encoded_rounds = 'This object was encoded {} time(s)'.format(enconde_counter)    
-            return render_template('test.html',base64_convert=base64_convert,encoded_rounds=encoded_rounds)         
-        else:
-            return render_template('test.html', base64error='Invalid base64 entry')       
-        
-    except:
-        # If an exception is raised, it's not a valid base64 encoded string
-         return render_template('test.html', base64error='Invalid base64 entry')
-        
+    if request.method == 'POST':
+        try:
+            form_data = request.form
+            input_str = form_data.get('base64_data', '')
+            encode_counter = 0
 
+            # Try to decode repeatedly until decoding fails.
+            decoded_str = input_str
+            while True:
+                try:
+                    temp = base64.b64decode(decoded_str).decode("utf-8")
+                    if temp == decoded_str:
+                        break
+                    decoded_str = temp
+                    encode_counter += 1
+                except Exception:
+                    break
 
-@app.route('/test3', methods=['POST','GET'])
+            if encode_counter > 0:
+                rounds_message = f"This object was encoded {encode_counter} time(s)"
+                return render_template('test.html', base64_convert=decoded_str, encoded_rounds=rounds_message)
+            else:
+                # Otherwise, encode the input string once.
+                encoded_str = base64.b64encode(input_str.encode('utf-8')).decode('utf-8')
+                rounds_message = "Encoded 1 time(s)"
+                return render_template('test.html', base64_convert=encoded_str, encoded_rounds=rounds_message)
+        except Exception as e:
+            logging.exception("Error in base64 conversion")
+            return render_template('test.html', base64error='Invalid base64 entry')
+    return render_template('test.html')
+
+@app.route('/test3', methods=['POST', 'GET'])
 def ip_convert():
- 
-    
-    try:
-        ip_address = request.form['ip_convert'].replace(" ", "")
-        # Convert the address to binary
-        binary_ip = ""
-        if isinstance(ipaddress.ip_address(ip_address),ipaddress.IPv4Address):
-        # Convert each octet to binary
-            octets = ip_address.split(".")
-            for octet in octets:
-                binary_octet = bin(int(octet))[2:].zfill(8)
-                binary_ip += binary_octet + "."
-        # Remove the last "."
-            binary_ip = binary_ip[:-1]
-            return render_template('test.html',binary_ip=binary_ip, ip_version="IPV4")
-        elif isinstance(ipaddress.ip_address(ip_address),ipaddress.IPv6Address):
-        # Convert each hextet to binary
-            hextets = ip_address.split(":")
-            for hextet in hextets:
-                binary_hextet = bin(int(hextet, 16))[2:].zfill(16)
-                binary_ip += binary_hextet + ":"
-        # Remove the last ":"
-            binary_ip = binary_ip[:-1]
-            return render_template('test.html',binary_ip=binary_ip, ip_version="IPV6")    
-    except:
-        return render_template('test.html',error="Invalid IP address")        
-    
-    
+    if request.method == 'POST':
+        try:
+            ip_input = request.form.get('ip_convert', '').replace(" ", "")
+            ip_obj = ipaddress.ip_address(ip_input)
+            binary_ip = ""
+            if isinstance(ip_obj, ipaddress.IPv4Address):
+                octets = ip_input.split(".")
+                binary_ip = ".".join([bin(int(octet))[2:].zfill(8) for octet in octets])
+                return render_template('test.html', binary_ip=binary_ip, ip_version="IPV4")
+            elif isinstance(ip_obj, ipaddress.IPv6Address):
+                exploded = ip_obj.exploded
+                hextets = exploded.split(":")
+                binary_ip = ":".join([bin(int(hextet, 16))[2:].zfill(16) for hextet in hextets])
+                return render_template('test.html', binary_ip=binary_ip, ip_version="IPV6")
+        except Exception as e:
+            logging.exception("Error converting IP address")
+            return render_template('test.html', error="Invalid IP address")
+    return render_template('test.html')
 
-
-@app.route('/test4', methods=['POST','GET'])
+@app.route('/test4', methods=['POST', 'GET'])
 def get_ip_subnet():
-    try:
-        subnet_mask = request.form['subnet_mask']
-        ip_address= request.form['ip']
-        ip = ipaddress.ip_address(ip_address)
-        ip_subnet = str(ipaddress.ip_network(ip_address + '/' + subnet_mask, strict=False))
-        return render_template('test.html',ip_subnet=ip_subnet) 
-    except:
-         return render_template('test.html',ip_subnet_error="Invalid entry")   
+    if request.method == 'POST':
+        try:
+            subnet_mask = request.form.get('subnet_mask', '')
+            ip_address = request.form.get('ip', '')
+            ip_obj = ipaddress.ip_address(ip_address)
+            network = ipaddress.ip_network(f"{ip_address}/{subnet_mask}", strict=False)
+            return render_template('test.html', ip_subnet=str(network))
+        except Exception as e:
+            logging.exception("Error calculating subnet")
+            return render_template('test.html', ip_subnet_error="Invalid entry")
+    return render_template('test.html')
 
-
-@app.route('/test5', methods=['POST','GET'])
+@app.route('/test5', methods=['POST', 'GET'])
 def get_url():
-    
-    try:
-        url = request.form['url_decode']
-        url_check = urllib.parse.urlparse(url)
-        if url:
-            url = urllib.parse.unquote(url)
-            url = urllib.parse.unquote_plus(url)
-        elif isinstance(url, unicode):
-            url = urllib.parse.quote(url.encode('utf8'))
-            url = urllib.parse.unquote(url)
-            url = urllib.parse.unquote_plus(url)
-        else:
-            return render_template('test.html',url_error="invalid url") 
-        return render_template('test.html',url_decoded=url)
-    except:
-         return render_template('test.html',url_error="Invalid url. Enter the url in the format http://")  
+    if request.method == 'POST':
+        try:
+            url = request.form.get('url_decode', '')
+            if url:
+                parsed = urllib.parse.urlparse(url)
+                if not parsed.scheme:
+                    url = "http://" + url
+                decoded_url = urllib.parse.unquote_plus(url)
+                return render_template('test.html', url_decoded=decoded_url)
+            else:
+                return render_template('test.html', url_error="Invalid URL")
+        except Exception as e:
+            logging.exception("Error decoding URL")
+            return render_template('test.html', url_error="Invalid URL. Enter the URL in the format http://")
+    return render_template('test.html')
 
-
-@app.route('/test6', methods=['POST','GET'])        
+@app.route('/test6', methods=['POST', 'GET'])
 def get_url_redirects():
-    url_redirects = []
-    
-    try:
-        url = request.form['url_redirector']
-        responses = requests.get(url)
-        final_code_200 = responses.status_code
-        final_url = responses.url
-        
-       
-        if url:
-            for response in responses.history:
-                url_redirects.append({ "url":response.url, "response_code":response.status_code})
-            #print(response.status_code) 
-            url_redirects.append({"url":final_url,"response_code":final_code_200})            
-            url_redirects = json.loads(json.dumps(url_redirects))
-            return render_template('test.html',url_redirector=url_redirects)
-        else:
-            return render_template('test.html',url_redirect_error="Invalid url") 
-        
-    except:
-         return render_template('test.html',url_redirect_error="Invalid url")
-         
+    if request.method == 'POST':
+        try:
+            url = request.form.get('url_redirector', '')
+            if url:
+                response = requests.get(url, allow_redirects=True, timeout=10)
+                redirects = []
+                for resp in response.history:
+                    redirects.append({
+                        "url": resp.url,
+                        "response_code": resp.status_code
+                    })
+                redirects.append({
+                    "url": response.url,
+                    "response_code": response.status_code
+                })
+                return render_template('test.html', url_redirector=redirects)
+            else:
+                return render_template('test.html', url_redirect_error="Invalid URL")
+        except Exception as e:
+            logging.exception("Error tracing URL redirects")
+            return render_template('test.html', url_redirect_error="Invalid URL")
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run()
