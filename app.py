@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 @app.context_processor
 def inject_visitor_ip():
     # If behind a proxy, X-Forwarded-For can contain a list of IPs.
-    ip = request.headers.get("X-Forwarded-For", request.remote_addr)[0]
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr).split(",")[0]
     return dict(visitor_ip=ip)
 
 @app.route('/')
