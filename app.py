@@ -197,10 +197,10 @@ def get_subnet_info(ip):
        (octets[0] == 192 and octets[1] == 168):
         is_private = True
      
-    iP_add = f"IP: {ip}\n"
-    type= f"Type: {'Private' if is_private else 'Public' } {network_type}\n"
-    network_address =f"Network Address: {network_address}/{cidr}\n" 
-    subnet_mask= f"Subnet Mask: {subnet_mask}"
+    iP_add = f"{ip}\n"
+    type= f"{'Private' if is_private else 'Public' } {network_type}\n"
+    network_address =f"{network_address}/{cidr}\n" 
+    subnet_mask= f"{subnet_mask}"
      
     data["IP"] = iP_add
     data["type"] = type
