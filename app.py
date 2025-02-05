@@ -92,7 +92,7 @@ def ip_convert():
 def get_ip_subnet():
     if request.method == 'POST':
         try:
-            ip_address = request.form.get('ip', '')
+            ip_address = request.form.get('ip', '').strip()
             network = get_subnet_info(ip_address)
             return render_template('test.html', ip_subnet=network)
         except Exception as e:
