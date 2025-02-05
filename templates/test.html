@@ -191,15 +191,12 @@
                 <label for="ipSubnetInput" class="form-label">Enter IPv4 Address:</label>
                 <input type="text" class="form-control" id="ipSubnetInput" name="ip" placeholder="e.g., 192.168.1.10" required>
               </div>
-              <div class="mb-3">
-                <label for="subnetMask" class="form-label">Subnet Mask (CIDR):</label>
-                <input type="number" class="form-control" id="subnetMask" name="subnet_mask" placeholder="e.g., 24" required>
-              </div>
+              
               <button type="submit" class="btn btn-primary w-100">Calculate</button>
             </form>
             {% if ip_subnet %}
             <div class="result-box mt-3">
-              <strong>Subnet Address:</strong> <span id="subnetResult">{{ ip_subnet }}</span>
+              <strong>Subnet Address:</strong> <span id="subnetResult">{{ ip_subnet['network address'}}</span>
               <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
                 <i class="fa fa-copy"></i> Copy
               </button>
