@@ -201,6 +201,27 @@
                 <i class="fa fa-copy"></i> Copy
               </button>
             </div>
+
+             <div class="result-box mt-3">
+              <strong>Subnet mask:</strong> <span id="subnetResult">{{ ip_subnet['subnet mask'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+                <i class="fa fa-copy"></i> Copy
+              </button>
+            </div>
+
+             <div class="result-box mt-3">
+              <strong>IP:</strong> <span id="subnetResult">{{ ip_subnet['IP'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+                <i class="fa fa-copy"></i> Copy
+              </button>
+            </div>
+
+             <div class="result-box mt-3">
+              <strong>Type:</strong> <span id="subnetResult">{{ ip_subnet['type'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+                <i class="fa fa-copy"></i> Copy
+              </button>
+            </div>
             {% elif ip_subnet_error %}
             <div class="result-box mt-3 text-danger">
               {{ ip_subnet_error }}
