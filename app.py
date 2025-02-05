@@ -6,6 +6,7 @@ import urllib.parse
 import requests
 import json
 import logging
+import re
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -91,11 +92,9 @@ def ip_convert():
 def get_ip_subnet():
     if request.method == 'POST':
         try:
-            subnet_mask = request.form.get('subnet_mask', '')
             ip_address = request.form.get('ip', '')
-            ip_obj = ipaddress.ip_address(ip_address)
-            network = ipaddress.ip_network(f"{ip_address}/{subnet_mask}", strict=False)
-            return render_template('test.html', ip_subnet=str(network))
+            network = get_subnet_info(ip_address)
+            return render_template('test.html', ip_subnet=network)
         except Exception as e:
             logging.exception("Error calculating subnet")
             return render_template('test.html', ip_subnet_error="Invalid entry")
@@ -144,5 +143,70 @@ def get_url_redirects():
             return render_template('test.html', url_redirect_error="Invalid URL")
     return render_template('test.html')
 
+def is_valid_ip(ip):
+    """Validate IPv4 address format"""
+    pattern = r'^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$'
+    if not re.match(pattern, ip):
+        return False
+    octets = list(map(int, ip.split('.')))
+    return all(0 <= octet <= 255 for octet in octets)
+
+def get_subnet_info(ip):
+    data = {}
+    """Return subnet information using classful addressing"""
+    if not is_valid_ip(ip):
+        return "Invalid IP address"
+    
+    octets = list(map(int, ip.split('.')))
+    first_octet = octets[0]
+    
+    # Class determination and subnet mask assignment
+    if first_octet == 0:
+        return "Invalid IP address (first octet is 0)"
+    elif first_octet == 127:
+        subnet_mask = '255.0.0.0'
+        network_type = 'Loopback'
+    elif 1 <= first_octet <= 126:
+        subnet_mask = '255.0.0.0'
+        network_type = 'Class A'
+    elif 128 <= first_octet <= 191:
+        subnet_mask = '255.255.0.0'
+        network_type = 'Class B'
+    elif 192 <= first_octet <= 223:
+        subnet_mask = '255.255.255.0'
+        network_type = 'Class C'
+    elif 224 <= first_octet <= 239:
+        return "Class D (Multicast) - No specific subnet"
+    elif 240 <= first_octet <= 255:
+        return "Class E (Reserved) - No specific subnet"
+    else:
+        return "Invalid IP address"
+
+    # Calculate network address
+    mask_octets = list(map(int, subnet_mask.split('.')))
+    network_parts = [str(octets[i] & mask_octets[i]) for i in range(4)]
+    network_address = '.'.join(network_parts)
+    
+    # Convert subnet mask to CIDR notation
+    cidr = sum(bin(octet).count('1') for octet in mask_octets)
+    
+    # Check if private IP
+    is_private = False
+    if (octets[0] == 10) or \
+       (octets[0] == 172 and 16 <= octets[1] <= 31) or \
+       (octets[0] == 192 and octets[1] == 168):
+        is_private = True
+     
+    iP_add = f"IP: {ip}\n"
+    type= f"Type: {'Private' if is_private else 'Public' } {network_type}\n"
+    network_address =f"Network Address: {network_address}/{cidr}\n" 
+    subnet_mask= f"Subnet Mask: {subnet_mask}"
+     
+    data["IP"] = iP_add
+    data["type"] = type
+    data["network address"] = network_address
+    data["subnet mask"] = subnet_mask
+    return data
+    
 if __name__ == '__main__':
     app.run()
