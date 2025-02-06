@@ -197,15 +197,15 @@
             </form>
             {% if ip_subnet %}
             <div class="result-box mt-3">
-              <strong>Subnet Address:</strong> <span id="subnetResult">{{ ip_subnet['network address'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+              <strong>Subnet Address:</strong> <span id="subnetResult-network-address">{{ ip_subnet['network address'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-network-address')">
                 <i class="fa fa-copy"></i> Copy
               </button>
             </div>
 
              <div class="result-box mt-3">
-              <strong>Subnet mask:</strong> <span id="subnetResult">{{ ip_subnet['subnet mask'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+              <strong>Subnet mask:</strong> <span id="subnetResult-mask">{{ ip_subnet['subnet mask'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-mask')">
                 <i class="fa fa-copy"></i> Copy
               </button>
             </div>
@@ -218,8 +218,8 @@
             </div>
 
              <div class="result-box mt-3">
-              <strong>Type:</strong> <span id="subnetResult">{{ ip_subnet['type'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
+              <strong>Type:</strong> <span id="subnetResult-type">{{ ip_subnet['type'] }}</span>
+              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-type')">
                 <i class="fa fa-copy"></i> Copy
               </button>
             </div>
