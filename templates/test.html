@@ -3,328 +3,271 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Conversion Tools</title>
-  <!-- Google Fonts -->
+  <title>Conversion Tools (Tailwind)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-  
-  <style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'roboto-slab': ['"Roboto Slab"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
     body {
-      font-family: 'Roboto Slab', serif;
-      background: #f5f5f5;
-      padding-bottom:50px;
+      font-family: theme('fontFamily.roboto-slab');
+      @apply bg-gray-100 text-gray-800;
+      /* Add padding-bottom equal or more than footer height */
+      padding-bottom: 100px; /* Adjust as needed */
     }
     h1, h2, h3, h4, h5 {
-      font-weight: 700;
-      color: #333;
+      @apply font-bold text-gray-800;
     }
-    .header-section {
-      background: #fff;
-      padding: 30px 15px;
-      border-bottom: 1px solid #e0e0e0;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .header-section h1 {
-      font-size: 2.5rem;
-    }
-    .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-    .card-header {
-      background-color: #2185d0;
-      color: #fff;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      font-size: 1.25rem;
-    }
-    .card-body label {
-      font-weight: 600;
-    }
-    .btn-copy {
-      font-size: 0.8rem;
-      padding: 3px 8px;
-    }
+    /* Style for copy button positioning */
     .result-box {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 10px;
-      word-wrap: break-word;
-      font-family: monospace;
+      @apply relative; /* Needed for absolute positioning of the button */
     }
-    .footer {
-      background: #fff;
-      border-top: 1px solid #e0e0e0;
-      padding: 15px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #777;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+    .copy-btn-abs {
+       @apply absolute top-2 right-2;
+    }
+    /* Style for the specific redirect tracer layout */
+    .tracer-badge {
+        @apply inline-block px-2 py-0.5 text-xs font-semibold rounded mr-2;
     }
   </style>
 </head>
-<body>
-  
-  <!-- Header -->
-  <div class="header-section">
-    <h1>DTC Conversion Tools</h1>
-    <p class="lead text-muted">A set of modern conversion tools: Unix time, Base64, IP conversions, URL decode & redirect trace</p>
+<body class="font-roboto-slab">
+
+  <div class="bg-white py-8 px-4 border-b border-gray-200 text-center mb-8">
+    <h1 class="text-4xl">DTC Conversion Tools</h1>
+    <p class="text-lg text-gray-500 mt-2">A set of modern conversion tools: Unix time, Base64, IP conversions, URL decode & redirect trace</p>
   </div>
-  
-  <div class="container">
-    <!-- Visitor IP Card -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header bg-secondary">Your IP Address</div>
-          <div class="card-body">
-            <p class="mb-0">Your IP is: <strong>{{ visitor_ip }}</strong></p>
+
+  <div class="container mx-auto px-4">
+    <div class="mb-6">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="bg-gray-500 text-white p-4 text-lg font-semibold">Your IP Address</div>
+          <div class="p-6">
+            <p class="mb-0">Your IP is: <strong class="font-semibold">{{ visitor_ip }}</strong></p>
           </div>
         </div>
-      </div>
     </div>
-    
-    <div class="row g-4">
-      <!-- Unix Timestamp Converter -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Unix Timestamp Converter</div>
-          <div class="card-body">
-            <form id="unixForm" action="/test" method="post">
-              <div class="mb-3">
-                <label for="unixInput" class="form-label">Enter Unix Timestamp:</label>
-                <input type="number" class="form-control" id="unixInput" name="unix_time" placeholder="e.g., 1609459200" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Convert</button>
-            </form>
-            {% if date_covert %}
-            <div class="result-box mt-3">
-              <strong>Converted Date:</strong> <span id="unixResult">{{ date_covert }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('unixResult')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
-            {% elif unix_error %}
-            <div class="result-box mt-3 text-danger">
-              {{ unix_error }}
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      
-      <!-- Base64 Converter -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Base64 Converter</div>
-          <div class="card-body">
-            <form id="base64Form" action="/test2" method="post">
-              <div class="mb-3">
-                <label for="base64Input" class="form-label">Enter text or Base64 encoded string:</label>
-                <input type="text" class="form-control" id="base64Input" name="base64_data" placeholder="Hello, World!" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Decode / Encode</button>
-            </form>
-            {% if base64_convert %}
-            <div class="result-box mt-3">
-              <strong>Result:</strong> <span id="base64Result">{{ base64_convert }}</span><br>
-              <small>{{ encoded_rounds }}</small>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('base64Result')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
-            {% elif base64error %}
-            <div class="result-box mt-3 text-danger">
-              {{ base64error }}
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      
-      <!-- IP to Binary Converter -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">IP to Binary Converter</div>
-          <div class="card-body">
-            <form id="ipForm" action="/test3" method="post">
-              <div class="mb-3">
-                <label for="ipInput" class="form-label">Enter IPv4/IPv6 Address:</label>
-                <input type="text" class="form-control" id="ipInput" name="ip_convert" placeholder="e.g., 192.168.1.1" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Convert</button>
-            </form>
-            {% if binary_ip %}
-            <div class="result-box mt-3">
-              <strong>{{ ip_version }} Binary Notation:</strong> <span id="binaryIPResult">{{ binary_ip }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('binaryIPResult')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
-            {% elif error %}
-            <div class="result-box mt-3 text-danger">
-              {{ error }}
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      
-      <!-- IPv4 Subnet Calculator -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">IPv4 Subnet Calculator</div>
-          <div class="card-body">
-            <form id="subnetForm" action="/test4" method="post">
-              <div class="mb-3">
-                <label for="ipSubnetInput" class="form-label">Enter IPv4 Address:</label>
-                <input type="text" class="form-control" id="ipSubnetInput" name="ip" placeholder="e.g., 192.168.1.10" required>
-              </div>
-              
-              <button type="submit" class="btn btn-primary w-100">Calculate</button>
-            </form>
-            {% if ip_subnet %}
-            <div class="result-box mt-3">
-              <strong>Subnet Address:</strong> <span id="subnetResult-network-address">{{ ip_subnet['network address'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-network-address')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
 
-             <div class="result-box mt-3">
-              <strong>Subnet mask:</strong> <span id="subnetResult-mask">{{ ip_subnet['subnet mask'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-mask')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-             <div class="result-box mt-3">
-              <strong>IP:</strong> <span id="subnetResult">{{ ip_subnet['IP'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">Unix Timestamp Converter</div>
+        <div class="p-6">
+          <form id="unixForm" action="/test" method="post">
+            <div class="mb-4">
+              <label for="unixInput" class="block text-sm font-semibold text-gray-700 mb-1">Enter Unix Timestamp:</label>
+              <input type="number" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="unixInput" name="unix_time" placeholder="e.g., 1609459200" required>
             </div>
-
-             <div class="result-box mt-3">
-              <strong>Type:</strong> <span id="subnetResult-type">{{ ip_subnet['type'] }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('subnetResult-type')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
-            </div>
-            {% elif ip_subnet_error %}
-            <div class="result-box mt-3 text-danger">
-              {{ ip_subnet_error }}
-            </div>
-            {% endif %}
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Convert</button>
+          </form>
+          {% if date_covert %}
+          <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+            <strong class="font-semibold font-sans">Converted Date:</strong> <span id="unixResult">{{ date_covert }}</span>
+            <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('unixResult')">
+              <i class="fa fa-copy mr-1"></i> Copy
+            </button>
           </div>
+          {% elif unix_error %}
+          <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+            {{ unix_error }}
+          </div>
+          {% endif %}
         </div>
       </div>
-      
-      <!-- URL Decoder -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">URL Decoder</div>
-          <div class="card-body">
-            <form id="urlDecodeForm" action="/test5" method="post">
-              <div class="mb-3">
-                <label for="urlInput" class="form-label">Enter URL to decode:</label>
-                <input class="form-control" id="urlInput" name="url_decode" placeholder="http://example.com/%20test" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Decode</button>
-            </form>
-            {% if url_decoded %}
-            <div class="result-box mt-3">
-              <strong>Decoded URL:</strong> <span id="urlResult">{{ url_decoded }}</span>
-              <button class="btn btn-sm btn-outline-secondary btn-copy float-end" onclick="copyToClipboard('urlResult')">
-                <i class="fa fa-copy"></i> Copy
-              </button>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">Base64 Converter</div>
+        <div class="p-6">
+          <form id="base64Form" action="/test2" method="post">
+            <div class="mb-4">
+              <label for="base64Input" class="block text-sm font-semibold text-gray-700 mb-1">Enter text or Base64 encoded string:</label>
+              <input type="text" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="base64Input" name="base64_data" placeholder="Hello, World!" required>
             </div>
-            {% elif url_error %}
-            <div class="result-box mt-3 text-danger">
-              {{ url_error }}
-            </div>
-            {% endif %}
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Decode / Encode</button>
+          </form>
+          {% if base64_convert %}
+           <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+            <strong class="font-semibold font-sans">Result:</strong> <span id="base64Result">{{ base64_convert }}</span><br>
+            <small class="font-sans text-xs text-gray-500">{{ encoded_rounds }}</small>
+            <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('base64Result')">
+              <i class="fa fa-copy mr-1"></i> Copy
+            </button>
           </div>
+          {% elif base64error %}
+           <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+            {{ base64error }}
+           </div>
+          {% endif %}
         </div>
       </div>
-      
-      <!-- URL Redirect Tracer -->
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">URL Redirect Tracer</div>
-          <div class="card-body">
-            <form id="redirectForm" action="/test6" method="post">
-              <div class="mb-3">
-                <label for="redirectInput" class="form-label">Enter URL for redirect tracing:</label>
-                <input type="url" class="form-control" id="redirectInput" name="url_redirector" placeholder="http://example.com" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Trace</button>
-            </form>
-            {% if url_redirector %}
-            <div class="result-box mt-3">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <small>Response Code</small>
-                <strong>Trace Results</strong>
-              </div>
-              {% for result in url_redirector %}
-              <div class="mb-2">
-                <span class="badge {% if result.response_code == 200 %}bg-success{% else %}bg-danger{% endif %} me-2">
-                  {{ result.response_code }}
-                </span>
-                <span class="text-break" id="redirectResult{{ loop.index }}">{{ result.url }}</span>
-                <button class="btn btn-sm btn-outline-secondary btn-copy" onclick="copyToClipboard('redirectResult{{ loop.index }}')">
-                  <i class="fa fa-copy"></i>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">IP to Binary Converter</div>
+        <div class="p-6">
+          <form id="ipForm" action="/test3" method="post">
+            <div class="mb-4">
+              <label for="ipInput" class="block text-sm font-semibold text-gray-700 mb-1">Enter IPv4/IPv6 Address:</label>
+              <input type="text" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="ipInput" name="ip_convert" placeholder="e.g., 192.168.1.1" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Convert</button>
+          </form>
+          {% if binary_ip %}
+          <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+            <strong class="font-semibold font-sans">{{ ip_version }} Binary Notation:</strong> <span id="binaryIPResult">{{ binary_ip }}</span>
+            <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('binaryIPResult')">
+              <i class="fa fa-copy mr-1"></i> Copy
+            </button>
+          </div>
+          {% elif error %}
+          <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+             {{ error }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">IPv4 Subnet Calculator</div>
+        <div class="p-6">
+          <form id="subnetForm" action="/test4" method="post">
+            <div class="mb-4">
+              <label for="ipSubnetInput" class="block text-sm font-semibold text-gray-700 mb-1">Enter IPv4 Address:</label>
+              <input type="text" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="ipSubnetInput" name="ip" placeholder="e.g., 192.168.1.10" required>
+            </div>
+             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Calculate</button>
+          </form>
+          {% if ip_subnet %}
+             <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+               <strong class="font-semibold font-sans">Network Address:</strong> <span id="subnetResult-network-address">{{ ip_subnet['network address'] }}</span>
+               <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('subnetResult-network-address')">
+                 <i class="fa fa-copy mr-1"></i> Copy
+               </button>
+             </div>
+             <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+                <strong class="font-semibold font-sans">Subnet Mask:</strong> <span id="subnetResult-mask">{{ ip_subnet['subnet mask'] }}</span>
+                <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('subnetResult-mask')">
+                  <i class="fa fa-copy mr-1"></i> Copy
                 </button>
-              </div>
-              {% endfor %}
-            </div>
-            {% elif url_redirect_error %}
-            <div class="result-box mt-3 text-danger">
-              {{ url_redirect_error }}
-            </div>
-            {% endif %}
+             </div>
+             <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+                <strong class="font-semibold font-sans">IP:</strong> <span id="subnetResult">{{ ip_subnet['IP'] }}</span>
+                 <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('subnetResult')">
+                   <i class="fa fa-copy mr-1"></i> Copy
+                 </button>
+             </div>
+             <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+                 <strong class="font-semibold font-sans">Type:</strong> <span id="subnetResult-type">{{ ip_subnet['type'] }}</span>
+                 <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('subnetResult-type')">
+                   <i class="fa fa-copy mr-1"></i> Copy
+                 </button>
+             </div>
+          {% elif ip_subnet_error %}
+          <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+            {{ ip_subnet_error }}
           </div>
+          {% endif %}
         </div>
       </div>
-      
-    </div><!-- End Row -->
-  </div><!-- End Container -->
-  
-  <!-- Footer -->
-  <footer class="footer">
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">URL Decoder</div>
+        <div class="p-6">
+          <form id="urlDecodeForm" action="/test5" method="post">
+            <div class="mb-4">
+              <label for="urlInput" class="block text-sm font-semibold text-gray-700 mb-1">Enter URL to decode:</label>
+              <input type="text" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="urlInput" name="url_decode" placeholder="http://example.com/%20test" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Decode</button>
+          </form>
+           {% if url_decoded %}
+          <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-words"> 
+            <strong class="font-semibold font-sans">Decoded URL:</strong> <span id="urlResult">{{ url_decoded }}</span>
+            <button class="copy-btn-abs text-xs px-2 py-1 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('urlResult')">
+              <i class="fa fa-copy mr-1"></i> Copy
+            </button>
+          </div>
+          {% elif url_error %}
+          <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+            {{ url_error }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">URL Redirect Tracer</div>
+        <div class="p-6">
+          <form id="redirectForm" action="/test6" method="post">
+            <div class="mb-4">
+              <label for="redirectInput" class="block text-sm font-semibold text-gray-700 mb-1">Enter URL for redirect tracing:</label>
+              <input type="url" class="block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" id="redirectInput" name="url_redirector" placeholder="http://example.com" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Trace</button>
+          </form>
+          {% if url_redirector %}
+          <div class="result-box bg-gray-50 border border-gray-200 rounded-lg p-3 mt-4 font-mono text-sm break-all"> 
+             <div class="flex justify-between items-center mb-2 font-sans text-xs text-gray-500">
+                <span>Response Code</span>
+                <strong class="font-semibold">Trace Results</strong>
+                <span></span> </div>
+             {% for result in url_redirector %}
+             <div class="mb-2 flex items-center justify-between relative pr-10"> 
+               <span class="tracer-badge {% if result.response_code == 200 %}bg-green-100 text-green-800{% elif result.response_code >= 300 and result.response_code < 400 %}bg-yellow-100 text-yellow-800{% else %}bg-red-100 text-red-800{% endif %}">
+                 {{ result.response_code }}
+               </span>
+               <span class="flex-grow mr-2" id="redirectResult{{ loop.index }}">{{ result.url }}</span>
+               <button class="absolute top-0 right-0 text-xs px-1.5 py-0.5 border border-gray-300 bg-white rounded hover:bg-gray-100 text-gray-600 inline-flex items-center" onclick="copyToClipboard('redirectResult{{ loop.index }}')">
+                 <i class="fa fa-copy"></i>
+               </button>
+             </div>
+             {% endfor %}
+           </div>
+           {% elif url_redirect_error %}
+           <div class="result-box bg-red-50 border border-red-200 rounded-lg p-3 mt-4 font-mono text-sm break-words text-red-700"> 
+            {{ url_redirect_error }}
+           </div>
+           {% endif %}
+        </div>
+      </div>
+
+    </div></div><footer class="bg-white border-t border-gray-200 p-4 text-center text-sm text-gray-600 fixed bottom-0 left-0 w-full z-10">
     Copyright © 2022 Chukwuemeka Okeke
   </footer>
-  
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom Script for Copy functionality and auto-scroll -->
+
   <script>
     function copyToClipboard(elementId) {
-      const text = document.getElementById(elementId).textContent;
-      navigator.clipboard.writeText(text)
+      const element = document.getElementById(elementId);
+      const text = element ? element.textContent : ''; // Simplified check
+      navigator.clipboard.writeText(text.trim())
         .then(() => alert("Copied to clipboard!"))
         .catch(err => console.error("Failed to copy: ", err));
     }
-    
+
     // On page load, check for any result boxes with content and scroll to the first one
+    // THIS SCRIPT REMAINS UNCHANGED because we kept the 'result-box' class on the relevant divs.
     window.addEventListener('load', function() {
       const results = document.querySelectorAll('.result-box');
       for (let i = 0; i < results.length; i++) {
-        if (results[i].textContent.trim() !== '') {
-          results[i].scrollIntoView({ behavior: 'smooth' });
-          break;
+        // Check if the result box contains more than just whitespace and potentially the hidden copy button text
+        const contentToCheck = results[i].cloneNode(true); // Clone to avoid modifying the original
+        const buttons = contentToCheck.querySelectorAll('button');
+        buttons.forEach(btn => btn.remove()); // Remove buttons before checking text content
+        
+        if (contentToCheck.textContent.trim() !== '') {
+          results[i].scrollIntoView({ behavior: 'smooth', block: 'center' }); // Added block: 'center' for better visibility
+          break; // Scroll only to the first non-empty result box
         }
       }
     });
